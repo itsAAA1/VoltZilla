@@ -1,0 +1,21 @@
+{
+  "name": "VoltZilla",
+  "symbol": "VZLA",
+  "description": "VoltZilla (VZLA) — The Electric Beast of Solana. A meme coin powered by lightning energy and Godzilla-level dominance. Built on Solana for speed, power, and explosive gains.",
+  "image": "https://raw.githubusercontent.com/itsAAA1/VoltZilla/main/assets/logo.png",
+  "external_url": "https://itsaaa1.github.io",
+  "attributes": [
+    { "trait_type": "Chain", "value": "Solana" },
+    { "trait_type": "Type", "value": "Meme Coin" },
+    { "trait_type": "Symbol", "value": "VZLA" }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "https://raw.githubusercontent.com/itsAAA1/VoltZilla/main/assets/logo.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image"
+  }
+}
