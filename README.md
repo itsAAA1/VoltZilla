@@ -6,8 +6,7 @@
 [![Solana](https://img.shields.io/badge/Blockchain-Solana-9945FF?style=for-the-badge&logo=solana)](https://solana.com)
 [![Token](https://img.shields.io/badge/Token-VZLA-FFD700?style=for-the-badge)](https://dexscreener.com)
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
-[![Community](https://img.shields.io/badge/Community-Discord-5865F2?style=for-the-badge&logo=discord)](https://discord.gg/voltzilla)
-[![Twitter](https://img.shields.io/badge/Twitter-Follow-1DA1F2?style=for-the-badge&logo=twitter)](https://twitter.com/VoltZilla_VZLA)
+[![Twitter](https://img.shields.io/badge/Twitter-Follow-1DA1F2?style=for-the-badge&logo=twitter)](https://x.com/voltzillasol1)
 
 <img src="https://raw.githubusercontent.com/itsAAA1/VoltZilla/main/assets/logo.png" alt="VoltZilla Logo" width="200"/>
 
@@ -21,9 +20,11 @@
 
 **VoltZilla (VZLA)** هو توكن ميم مبني على شبكة **Solana** عالية السرعة، يجمع بين طاقة البرق وقوة البلوكشين. ليس مجرد عملة — بل هو **حركة**، **مجتمع**، و**فرصة**.
 
-تم إطلاق VZLA بروح المقاتل الرقمي الذي لا يستسلم، مستوحى من قوة الكهرباء وسرعة الصاعقة. كل معاملة على شبكة Solana تحمل بصمة VoltZilla.
+تم تقديم مشروع VZLA بروح المقاتل الرقمي الذي لا يستسلم، مستوحى من قوة الكهرباء وسرعة الصاعقة. كل معاملة على شبكة Solana تحمل بصمة VoltZilla.
 
 ---
+
+**حالة التوثيق (3 نوفمبر 2026):** الحساب الاجتماعي الذي أكده صاحب المشروع هو [@voltzillasol1](https://x.com/voltzillasol1). توجد تناقضات بين المستودعات والموقع في عنوان التوكن والخانات العشرية والتوزيع وتاريخ الإنشاء. الأرقام أدناه بيانات مسودة، وليست توثيقًا على الشبكة أو توصية تداول.
 
 ## 📊 معلومات التوكن
 
@@ -42,7 +43,7 @@
 
 ### المرحلة الأولى - الإطلاق ⚡
 - [x] إنشاء التوكن على Solana
-- [x] إطلاق المجتمع على Discord و Telegram
+- [ ] إنشاء قنوات إضافية للمجتمع عند الإعلان عنها رسميًا
 - [ ] إدراج على DexScreener
 - [ ] الوصول لـ 1,000 حامل
 
@@ -64,7 +65,7 @@
 
 - ⚡ **سرعة Solana** — معاملات فورية بتكلفة أقل من سنت
 - 🔥 **مجتمع قوي** — مجتمع عربي وعالمي نشط
-- 💎 **شفافية كاملة** — عقد مفتوح المصدر وقابل للتدقيق
+- 💎 **الشفافية قيد الاستكمال** — لا تتوفر حاليًا معلومات كافية لاعتماد عنوان توكن واحد وتوزيعه
 - 🚀 **إمكانية نمو هائلة** — في سوق الميم كوينز الصاعد
 
 ---
@@ -73,11 +74,9 @@
 
 | المنصة | الرابط |
 |---|---|
-| **DexScreener** | [تداول VZLA](https://dexscreener.com/solana) |
-| **Phantom Wallet** | [شراء VZLA](https://phantom.app) |
-| **Discord** | [انضم للمجتمع](https://discord.gg/voltzilla) |
-| **Twitter/X** | [@VoltZilla_VZLA](https://twitter.com/VoltZilla_VZLA) |
-| **Telegram** | [قناة VoltZilla](https://t.me/VoltZilla_VZLA) |
+| **DexScreener** | [بحث عام عن العملات](https://dexscreener.com/solana) — ليس رابط زوج تداول موثق |
+| **Phantom Wallet** | [المحفظة الرسمية للتطبيق](https://phantom.app) — ليس رابط شراء VZLA |
+| **Twitter/X** | [@voltzillasol1](https://x.com/voltzillasol1) |
 
 ---
 
