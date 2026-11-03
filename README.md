@@ -4,7 +4,7 @@
 ### وحش الطاقة الرقمي على شبكة Solana
 
 [![Solana](https://img.shields.io/badge/Blockchain-Solana-9945FF?style=for-the-badge&logo=solana)](https://solana.com)
-[![Token](https://img.shields.io/badge/Token-VZLA-FFD700?style=for-the-badge)](https://dexscreener.com)
+[![Token](https://img.shields.io/badge/Token-VZLA-FFD700?style=for-the-badge)](#-معلومات-التوكن)
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 [![Twitter](https://img.shields.io/badge/Twitter-Follow-1DA1F2?style=for-the-badge&logo=twitter)](https://x.com/voltzillasol1)
 
@@ -33,16 +33,16 @@
 | **الاسم** | VoltZilla |
 | **الرمز** | VZLA |
 | **الشبكة** | Solana (SPL Token) |
-| **إجمالي العرض** | 1,000,000,000 VZLA |
-| **المنصة** | Pump.fun → Raydium |
+| **إجمالي العرض** | غير متحقق منه (مسودة قديمة ذكرت 1,000,000,000) |
+| **المنصة** | غير متحقق منها |
 | **نوع التوكن** | Meme Token |
 
 ---
 
-## 🚀 خارطة الطريق (Roadmap)
+## 🚀 خارطة الطريق (أهداف غير مضمونة)
 
-### المرحلة الأولى - الإطلاق ⚡
-- [x] إنشاء التوكن على Solana
+### المرحلة الأولى - التحقق ⚡
+- [ ] التحقق من عنوان التوكن الرسمي على Solana
 - [ ] إنشاء قنوات إضافية للمجتمع عند الإعلان عنها رسميًا
 - [ ] إدراج على DexScreener
 - [ ] الوصول لـ 1,000 حامل
@@ -63,10 +63,10 @@
 
 ## 💡 لماذا VoltZilla؟
 
-- ⚡ **سرعة Solana** — معاملات فورية بتكلفة أقل من سنت
-- 🔥 **مجتمع قوي** — مجتمع عربي وعالمي نشط
+- ⚡ **شبكة Solana** — الشبكة المذكورة للمشروع؛ لا تعد الوثيقة بتكلفة أو سرعة محددة
+- 🔥 **المجتمع** — حساب X المعتمد فقط؛ لا توجد أرقام مجتمع موثقة
 - 💎 **الشفافية قيد الاستكمال** — لا تتوفر حاليًا معلومات كافية لاعتماد عنوان توكن واحد وتوزيعه
-- 🚀 **إمكانية نمو هائلة** — في سوق الميم كوينز الصاعد
+- ⚠️ **لا توجد وعود بالنمو أو العائد** — الخارطة أدناه أهداف غير مضمونة
 
 ---
 
