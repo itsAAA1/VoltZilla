@@ -30,13 +30,19 @@ for phrase in ("TO THE MOON", "تداول الآن", "مبروك!", "اشتري 
 check(not re.search(r'stat-number">\s*(1B|0%|∞)\s*<', html), "unverified supply/tax/growth stat shown as fact")
 check("لا تشترِ الآن" in html, "no-buy verification notice missing")
 check('id="contract"' in html, "contract verification anchor missing")
+check('class="roadmap-dot dot-done"' not in html, "phase 1 marked complete without verification")
+check('class="roadmap-dot dot-active"' not in html, "phase 2 marked active without verification")
+check('لم يُقدَّم أي طلب إدراج بعد' in html, "no-submission notice missing")
+check(not re.search(r'<div class="token-pct">\s*\d+%', html), "historical percentage presented as live tokenomics")
 check("لم يتم اعتماد عنوان توكن رسمي" in html, "unverified-address notice missing")
 
-for rel in ("README.md", "docs/CoinGecko_Application.md", "docs/DexScreener_Update.md", "docs/Income_Plan.md"):
+for rel in ("README.md", "docs/CoinGecko_Application.md", "docs/DexScreener_Update.md", "docs/Income_Plan.md", "STATUS.md"):
     t = (ROOT / rel).read_text(encoding="utf-8")
     for bad in ("100,000 ريال", "انعدام الضرائب", "الفريق (مقفلة)", "Pump.fun → Raydium", "- [x] إنشاء التوكن",
                 "ثقة المستثمرين ستزيد", "إمكانية نمو هائلة", "Binance: ~", "PayPal: ~"):
         check(bad not in t, f"{rel}: unsupported claim '{bad}'")
+check("لم يُقدَّم طلب بعد" in (ROOT / "docs/CoinGecko_Application.md").read_text(encoding="utf-8"), "CoinGecko document must say NOT SUBMITTED")
+check("لم يُقدَّم أي طلب بعد" in (ROOT / "README.md").read_text(encoding="utf-8"), "README status not synchronized")
 meta = json.loads((ROOT / "assets/metadata.json").read_text(encoding="utf-8"))
 check("gains" not in meta["description"].lower() and "explosive" not in meta["description"].lower(), "metadata promises gains")
 check(meta["symbol"] == "VZLA" and meta["external_url"] == "https://itsaaa1.github.io", "metadata identity fields changed")
