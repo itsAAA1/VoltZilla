@@ -3,12 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a0a0f">
+<link rel="canonical" href="https://itsaaa1.github.io/">
+<link rel="icon" type="image/svg+xml" href="https://itsaaa1.github.io/favicon.svg">
 <title>VoltZilla ⚡ — وحش الطاقة الرقمي على Solana</title>
 <meta name="description" content="VoltZilla (VZLA) - مشروع ميم على شبكة Solana. تفاصيل العقد والتوزيع قيد التحقق.">
 <meta property="og:title" content="VoltZilla ⚡ VZLA Token on Solana">
 <meta property="og:description" content="VoltZilla (VZLA) — a community meme project on Solana. Contract details are pending verification.">
 <meta property="og:image" content="https://raw.githubusercontent.com/itsAAA1/VoltZilla/main/assets/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -20,7 +24,7 @@
     --card: #1a1a2e;
   }
   * { margin:0; padding:0; box-sizing:border-box; }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; scroll-padding-top:85px; }
   body {
     background: var(--dark);
     color: #fff;
@@ -30,7 +34,7 @@
 
   /* ===== NAVBAR ===== */
   nav {
-    position: fixed; top:0; width:100%; z-index:1000;
+    position: sticky; top:0; width:100%; z-index:1000;
     background: rgba(10,10,15,0.95);
     backdrop-filter: blur(20px);
     border-bottom: 1px solid rgba(255,215,0,0.2);
@@ -174,7 +178,7 @@
     -webkit-background-clip:text; -webkit-text-fill-color:transparent;
     margin-bottom:8px;
   }
-  .stat-label { color:#888; font-size:0.9rem; }
+  .stat-label { color:#b7b7c6; font-size:0.9rem; }
 
   /* ===== ABOUT ===== */
   .about {
@@ -213,7 +217,7 @@
     -webkit-background-clip:text; -webkit-text-fill-color:transparent;
     margin-bottom:15px;
   }
-  .section-title p { color:#888; font-size:1.05rem; }
+  .section-title p { color:#b7b7c6; font-size:1.05rem; }
   
   .token-grid {
     max-width:900px; margin:0 auto;
@@ -232,7 +236,7 @@
     color:var(--yellow); margin-bottom:10px;
   }
   .token-name { font-weight:700; margin-bottom:5px; }
-  .token-amount { color:#888; font-size:0.85rem; }
+  .token-amount { color:#b7b7c6; font-size:0.85rem; }
 
   /* ===== ROADMAP ===== */
   .roadmap { padding:100px 20px; max-width:800px; margin:0 auto; }
@@ -248,7 +252,7 @@
   .dot-active { background:linear-gradient(135deg, var(--electric), var(--purple)); color:#000; animation:pulse 2s infinite; }
   .dot-future { background:rgba(255,255,255,0.1); border:2px solid rgba(255,255,255,0.2); color:#666; }
   .roadmap-content h3 { font-size:1.2rem; margin-bottom:8px; color:var(--yellow); }
-  .roadmap-content p { color:#888; line-height:1.6; }
+  .roadmap-content p { color:#b7b7c6; line-height:1.6; }
 
   /* ===== HOW TO BUY ===== */
   .how-to-buy { padding:100px 20px; background:var(--dark2); }
@@ -271,7 +275,7 @@
     margin:0 auto 15px; color:#000;
   }
   .step-card h3 { margin-bottom:10px; font-size:1.1rem; }
-  .step-card p { color:#888; font-size:0.9rem; line-height:1.6; }
+  .step-card p { color:#b7b7c6; font-size:0.9rem; line-height:1.6; }
 
   /* ===== COMMUNITY ===== */
   .community { padding:100px 20px; text-align:center; }
@@ -289,8 +293,6 @@
   }
   .social-card:hover { transform:translateY(-5px); }
   .social-card.twitter:hover { border-color:#1DA1F2; box-shadow:0 10px 30px rgba(29,161,242,0.2); }
-  .social-card.telegram:hover { border-color:#0088cc; box-shadow:0 10px 30px rgba(0,136,204,0.2); }
-  .social-card.discord:hover { border-color:#5865F2; box-shadow:0 10px 30px rgba(88,101,242,0.2); }
   .social-card.dex:hover { border-color:var(--yellow); box-shadow:0 10px 30px rgba(255,215,0,0.2); }
   .social-icon { font-size:2.5rem; }
   .social-name { font-weight:700; }
@@ -325,7 +327,7 @@
     background:var(--dark); border-top:1px solid rgba(255,255,255,0.05);
     padding:40px 20px; text-align:center;
   }
-  footer p { color:#555; font-size:0.85rem; line-height:1.8; }
+  footer p { color:#b7b7c6; font-size:0.85rem; line-height:1.8; }
   footer a { color:var(--yellow); text-decoration:none; }
 
   /* ===== RESPONSIVE ===== */
@@ -335,23 +337,50 @@
     .lightning-icon { font-size:6rem; }
     .about-text h2 { font-size:1.8rem; }
   }
+
+  /* Mobile navigation and accessibility */
+  .skip-link{position:absolute;top:-90px;right:12px;z-index:1200;padding:12px 18px;background:var(--yellow);color:#000;border-radius:9px;text-decoration:none;font-weight:900}
+  .skip-link:focus{top:8px}
+  a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--electric);outline-offset:4px}
+  .nav-btn{text-decoration:none;display:inline-block}
+  .mobile-nav{display:none;position:relative;z-index:1001}
+  .mobile-nav summary{cursor:pointer;list-style:none;color:#000;background:var(--yellow);border-radius:8px;padding:10px 14px;font-weight:900}
+  .mobile-nav summary::-webkit-details-marker{display:none}
+  .mobile-nav-panel{position:absolute;top:calc(100% + 8px);left:0;width:min(85vw,320px);max-height:75vh;overflow:auto;background:#17182b;border:1px solid rgba(255,215,0,.45);border-radius:12px;box-shadow:0 16px 35px rgba(0,0,0,.6);padding:8px;display:grid;gap:4px}
+  .mobile-nav-panel a{display:block;color:white;text-decoration:none;padding:13px 12px;border-radius:8px;font-size:1rem}
+  .mobile-nav-panel a:hover,.mobile-nav-panel a:focus-visible{background:rgba(255,215,0,.15);color:var(--yellow)}
+  @media(max-width:768px){.mobile-nav{display:block}nav{padding:10px 16px}nav>.nav-btn{display:none}.hero{min-height:auto;padding:90px 16px 65px}.ticker-inner{animation:none;flex-wrap:wrap;gap:8px 20px;white-space:normal;justify-content:center}.ticker-item:nth-child(n+8){display:none}}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
+<a class="skip-link" href="#main-content">تخطي إلى المحتوى</a>
 <div role="status" style="background:#1d2534;color:#f7eac8;padding:14px;text-align:center;line-height:1.7;border-bottom:1px solid #9b7625">⚠️ معلومات العقد والتوزيع وتاريخ الإطلاق قيد التحقق. لا تعتمد على الأرقام أو روابط الأسواق العامة كإثبات لهوية التوكن. حساب التواصل المعتمد حاليًا: <a href="https://x.com/voltzillasol1" target="_blank" rel="noopener noreferrer" style="color:#a9d9ff">@voltzillasol1</a>.</div>
 
 <!-- NAVBAR -->
-<nav>
+<nav aria-label="التنقل الرئيسي">
   <div class="nav-logo">⚡ VZLA</div>
   <ul class="nav-links">
     <li><a href="#about">عن المشروع</a></li>
     <li><a href="#tokenomics">التوكنوميكس</a></li>
     <li><a href="#roadmap">خارطة الطريق</a></li>
-    <li><a href="#buy">كيف تشتري</a></li>
+    <li><a href="#buy">قبل أي شراء</a></li>
     <li><a href="#community">المجتمع</a></li>
   </ul>
-  <button class="nav-btn" onclick="document.getElementById('contract').scrollIntoView({behavior:'smooth'})">تحقق من العنوان ⚡</button>
+  <a class="nav-btn" href="#contract">تحقق من العنوان ⚡</a>
+  <details class="mobile-nav">
+    <summary aria-label="فتح قائمة التنقل">☰ القائمة</summary>
+    <div class="mobile-nav-panel">
+      <a href="#about">عن المشروع</a>
+      <a href="#tokenomics">التوكنوميكس</a>
+      <a href="#roadmap">خارطة الطريق</a>
+      <a href="#buy">قبل أي شراء</a>
+      <a href="#community">المجتمع</a>
+      <a href="#contract">التحقق من العنوان</a>
+    </div>
+  </details>
 </nav>
+<main id="main-content">
 
 <!-- HERO -->
 <section class="hero">
@@ -372,18 +401,18 @@
   <div class="ticker-inner">
     <span class="ticker-item">⚡ VZLA TOKEN</span>
     <span class="ticker-item">🔥 SOLANA NETWORK</span>
-    <span class="ticker-item">💎 HOLD VZLA</span>
+    <span class="ticker-item">⚠️ IDENTITY PENDING</span>
     <span class="ticker-item">🚀 VOLTZILLA</span>
     <span class="ticker-item">⚡ COMMUNITY POWER</span>
     <span class="ticker-item">🌩️ LIGHTNING FAST</span>
-    <span class="ticker-item">💪 UNSTOPPABLE</span>
+    <span class="ticker-item">🔎 VERIFY TOKEN FIRST</span>
     <span class="ticker-item">⚡ VZLA TOKEN</span>
     <span class="ticker-item">🔥 SOLANA NETWORK</span>
-    <span class="ticker-item">💎 HOLD VZLA</span>
+    <span class="ticker-item">⚠️ IDENTITY PENDING</span>
     <span class="ticker-item">🚀 VOLTZILLA</span>
     <span class="ticker-item">⚡ COMMUNITY POWER</span>
     <span class="ticker-item">🌩️ LIGHTNING FAST</span>
-    <span class="ticker-item">💪 UNSTOPPABLE</span>
+    <span class="ticker-item">🔎 VERIFY TOKEN FIRST</span>
   </div>
 </div>
 
@@ -542,7 +571,7 @@
     <p>تابعنا عبر حساب X المعتمد فقط</p>
   </div>
   <div class="social-grid">
-    <a href="https://x.com/voltzillasol1" target="_blank" class="social-card twitter">
+    <a href="https://x.com/voltzillasol1" target="_blank" class="social-card twitter" rel="noopener noreferrer">
       <div class="social-icon">🐦</div>
       <div class="social-name">Twitter/X</div>
       <div style="color:#888; font-size:0.85rem;">@voltzillasol1</div>
@@ -555,6 +584,7 @@
   </div>
 </section>
 
+</main>
 <!-- FOOTER -->
 <footer>
   <p style="font-family:'Orbitron',sans-serif; font-size:1.2rem; margin-bottom:15px; background:linear-gradient(135deg,var(--yellow),var(--electric)); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">⚡ VoltZilla — الطاقة لا تنتهي ⚡</p>
@@ -563,26 +593,10 @@
 </footer>
 
 <script>
-// Smooth scroll
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    e.preventDefault();
-    document.querySelector(a.getAttribute('href'))?.scrollIntoView({behavior:'smooth'});
-  });
-});
-
-// Animate stats on scroll
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if(e.isIntersecting) e.target.style.opacity = '1', e.target.style.transform = 'translateY(0)';
-  });
-}, {threshold: 0.1});
-
-document.querySelectorAll('.stat-card, .token-card, .step-card').forEach(el => {
-  el.style.opacity = '0';
-  el.style.transform = 'translateY(30px)';
-  el.style.transition = 'all 0.6s ease';
-  observer.observe(el);
+// All navigation and site content remain usable without JavaScript.
+const menu = document.querySelector('.mobile-nav');
+if (menu) menu.addEventListener('click', event => {
+  if (event.target.closest('a')) menu.open = false;
 });
 </script>
 </body>
