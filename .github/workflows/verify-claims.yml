@@ -1,0 +1,22 @@
+name: VoltZilla source claim verification
+on:
+  push:
+    branches: [main]
+  pull_request:
+    paths:
+      - website/index.html
+      - README.md
+      - STATUS.md
+      - docs/**
+      - assets/metadata.json
+      - tests/check_claims.py
+      - .github/workflows/verify-claims.yml
+jobs:
+  claims:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify unsupported claims do not return
+        run: python3 tests/check_claims.py
