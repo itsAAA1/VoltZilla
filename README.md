@@ -26,6 +26,10 @@
 
 **حالة التوثيق (5 نوفمبر 2026):** الحساب الاجتماعي الذي أكده صاحب المشروع هو [@voltzillasol1](https://x.com/voltzillasol1). توجد تناقضات بين المستودعات والموقع في عنوان التوكن والخانات العشرية والتوزيع وتاريخ الإنشاء. الأرقام أدناه بيانات مسودة، وليست توثيقًا على الشبكة أو توصية تداول.
 
+## 🔬 بيانات العقد التي فُحصت على Solana
+
+**On-chain inspection — 5 November 2026 (Solana mainnet; Helius RPC via Nova):** The owner previously supplied mint `DHxStA9nRq6DdhBKT89s38fpxD9wE7MtyMn9HMuWeyN9`. The mint exists as **VoltZilla (VZLA)**, SPL Token (standard Token Program), **1,000,000 current units**, **9 decimals**. Mint authority remains active (more tokens can be created); freeze authority is null; metadata update authority is active. The largest reported token account holds **100% of the current supply**. No reliable spot price or verified liquidity pair was returned. This validates observable mint data **but not a cryptographic signature proving the owner's control or public approval of this mint as the project's sole official address**. Never call this supply immutable, decentralized, tradeable, or liquidity-locked without separate evidence. Another mint shown in an old whitepaper (`JBaHDseUdFEVbAik7rojwC8ZZ8EjyBi1qQPoK9tLpump`) is **a separate token** with **6 decimals** and approximately **999,992,926.77** current units; its authorities and creator differ, so those figures must not be merged.
+
 ## 📊 معلومات التوكن
 
 | المعلومة | التفاصيل |
@@ -33,7 +37,7 @@
 | **الاسم** | VoltZilla |
 | **الرمز** | VZLA |
 | **الشبكة** | Solana (SPL Token) |
-| **إجمالي العرض** | غير متحقق منه (مسودة قديمة ذكرت 1,000,000,000) |
+| **المعروض الحالي للعنوان الذي قدمه صاحب المشروع** | 1,000,000 VZLA؛ 9 خانات عشرية، وسلطة سك المزيد ما زالت مفعلة. لا يمثل اعتمادًا رسميًا نهائيًا. |
 | **المنصة** | غير متحقق منها |
 | **نوع التوكن** | Meme Token |
 
