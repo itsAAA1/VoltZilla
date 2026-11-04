@@ -8,13 +8,17 @@ This file describes repository documentation only. It is not proof of on-chain t
 | Brand and symbol | VoltZilla (VZLA), proposed labels | Owner project references |
 | Official social profile | X: https://x.com/voltzillasol1 | Confirmed by project owner |
 | Official mint address / ownership | **Not verified / غير معتمد** | Owner-authenticated address and original Solana transactions |
-| Supply, decimals, allocation, authorities | **Unverified** | Original on-chain mint and token records |
+| Supply, decimals, allocation, authorities | **Observed on-chain for owner-reported mint: 1,000,000 units, 9 decimals, mint authority active, freeze null, metadata mutable, one token account holds 100%; official mint approval and allocation Not verified** | On-chain RPC + owner signature for formal identity |
 | Pump.fun launch and date | **Not confirmed** | Verifiable launch transaction and owner evidence |
 | Liquidity, LP locks/burns, trading pairs | **Not verified** | Pool and relevant transactions |
 | DexScreener token listing | **Not verified** | Token-specific page matched to the verified mint |
 | CoinGecko application | **Not submitted / لم يُقدَّم بعد** | Submission receipt |
 | CoinMarketCap application | **Not submitted / لم يُقدَّم بعد** | Submission receipt |
 | Telegram, Discord or other channels | **Not approved** | Project-owner confirmation |
+
+## Verified chain observation (5 November 2026)
+
+**On-chain inspection — 5 November 2026 (Solana mainnet; Helius RPC via Nova):** The owner previously supplied mint `DHxStA9nRq6DdhBKT89s38fpxD9wE7MtyMn9HMuWeyN9`. The mint exists as **VoltZilla (VZLA)**, SPL Token (standard Token Program), **1,000,000 current units**, **9 decimals**. Mint authority remains active (more tokens can be created); freeze authority is null; metadata update authority is active. The largest reported token account holds **100% of the current supply**. No reliable spot price or verified liquidity pair was returned. This validates observable mint data **but not a cryptographic signature proving the owner's control or public approval of this mint as the project's sole official address**. Never call this supply immutable, decentralized, tradeable, or liquidity-locked without separate evidence. Another mint shown in an old whitepaper (`JBaHDseUdFEVbAik7rojwC8ZZ8EjyBi1qQPoK9tLpump`) is **a separate token** with **6 decimals** and approximately **999,992,926.77** current units; its authorities and creator differ, so those figures must not be merged.
 
 ## Roadmap
 1. Confirm official mint, ownership and documentation — **incomplete**.
