@@ -9,7 +9,7 @@ on:
       - STATUS.md
       - docs/**
       - assets/metadata.json
-      - tests/check_claims.py
+      - tests/**
       - .github/workflows/verify-claims.yml
 jobs:
   claims:
@@ -19,4 +19,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Verify unsupported claims do not return
-        run: python3 tests/check_claims.py
+        run: |
+          python3 tests/check_claims.py
+          python3 -m unittest discover -s tests -p "test_*.py" -v
