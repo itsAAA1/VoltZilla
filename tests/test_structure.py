@@ -84,6 +84,9 @@ class SourceWebsiteIntegrity(unittest.TestCase):
         self.assertIn("CoinGecko application", status)
         self.assertIn("Not submitted", status)
         self.assertIn("CoinMarketCap application", status)
+        self.assertIn("DHxStA9nRq6DdhBKT89s38fpxD9wE7MtyMn9HMuWeyN9", status)
+        self.assertIn("mint authority active", status)
+        self.assertIn("100%", status)
         self.assertIn("Not verified", status)
 
 
