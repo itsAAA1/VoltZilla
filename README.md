@@ -30,6 +30,24 @@
 
 **On-chain inspection — 5 November 2026 (Solana mainnet; Helius RPC via Nova):** The owner previously supplied mint `DHxStA9nRq6DdhBKT89s38fpxD9wE7MtyMn9HMuWeyN9`. The mint exists as **VoltZilla (VZLA)**, SPL Token (standard Token Program), **1,000,000 current units**, **9 decimals**. Mint authority remains active (more tokens can be created); freeze authority is null; metadata update authority is active. The largest reported token account holds **100% of the current supply**. No reliable spot price or verified liquidity pair was returned. This validates observable mint data **but not a cryptographic signature proving the owner's control or public approval of this mint as the project's sole official address**. Never call this supply immutable, decentralized, tradeable, or liquidity-locked without separate evidence. Another mint shown in an old whitepaper (`JBaHDseUdFEVbAik7rojwC8ZZ8EjyBi1qQPoK9tLpump`) is **a separate token** with **6 decimals** and approximately **999,992,926.77** current units; its authorities and creator differ, so those figures must not be merged.
 
+## 🧪 أداة الفحص المباشر للتوكن — قراءة فقط
+
+أُضيفت أداة Python تعمل على قراءة حسابَي SPL Token من Solana mainnet عبر JSON-RPC، دون أي مفاتيح خاصة أو توقيع معاملات:
+
+```bash
+python3 scripts/inspect_mints.py --check
+python3 -m unittest discover -s tests -p "test_*.py" -v
+```
+
+- تفحص العنوان الذي أبلغ به صاحب المشروع [DHxStA9…N9](https://solscan.io/token/DHxStA9nRq6DdhBKT89s38fpxD9wE7MtyMn9HMuWeyN9) والعنوان المنشور قديمًا [JBaHD…pump](https://solscan.io/token/JBaHDseUdFEVbAik7rojwC8ZZ8EjyBi1qQPoK9tLpump) **بشكل منفصل**.
+- `--check` يقارن **المعروض الخام، الخانات العشرية، سلطة السك، وسلطة التجميد** بلقطة 5 نوفمبر 2026؛ إذا تغيرت، تتوقف المهمة للمراجعة. تغيّر الكمية في عنوان سلطة سكه مفعلة ممكن، وهذا ليس وحده دليل مخالفة.
+- **لا** تثبت هذه الأداة ملكية المحفظة أو هوية المشروع، ولا تغيّر العقد أو صلاحياته، ولا تثبت سعرًا أو سيولة أو إدراجًا.
+- بيانات `update authority` الخاصة بالـMetaplex تحتاج فحص حساب ميتاداتا منفصل؛ ولا تدعي أداة SPL Mint أنها تفحصها.
+
+**للتفريق بين الإثباتين:** رصد بيانات التوكن على السلسلة لا يساوي اعتماد عنوانه رسميًا؛ اعتماد العنوان يحتاج إثباتًا موثوقًا من المحفظة ذات الصلاحية.
+
+---
+
 ## 📊 معلومات التوكن
 
 | المعلومة | التفاصيل |
