@@ -1,0 +1,31 @@
+name: VoltZilla read-only Solana mint audit
+
+on:
+  push:
+    paths:
+      - scripts/inspect_mints.py
+      - .github/workflows/onchain-mint-audit.yml
+  workflow_dispatch:
+  schedule:
+    # 06:17 Saudi time, once daily. The job reads public chain data only.
+    - cron: '17 3 * * *'
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Inspect both Solana mint candidates (no wallet signing)
+        run: python3 scripts/inspect_mints.py --check > mint-audit.json
+      - name: Attach public-readonly observation
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: voltzilla-mint-audit
+          path: mint-audit.json
+          if-no-files-found: ignore
+          retention-days: 30
