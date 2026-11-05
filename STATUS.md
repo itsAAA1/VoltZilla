@@ -9,8 +9,8 @@ This file describes repository documentation only. It is not proof of on-chain t
 | Official social profile | X: https://x.com/voltzillasol1 | Confirmed by project owner |
 | Official mint address / ownership | **Not verified / غير معتمد** | Owner-authenticated address and original Solana transactions |
 | Supply, decimals, allocation, authorities | **Observed on-chain for owner-reported mint: 1,000,000 units, 9 decimals, mint authority active, freeze null, metadata mutable, one token account holds 100%; official mint approval and allocation Not verified** | On-chain RPC + owner signature for formal identity |
-| Pump.fun launch and date | **Not confirmed** | Verifiable launch transaction and owner evidence |
-| Liquidity, LP locks/burns, trading pairs | **Not verified** | Pool and relevant transactions |
+| Pump.fun launch and date | A **separate legacy mint** was observed as created on Pump.fun on **27 October 2024**; the official launch and owner association remain unconfirmed | Original creation transaction and owner-signed mint identity |
+| Liquidity, LP locks/burns, trading pairs | **Not verified for the owner-reported million-unit mint**; the historical mint must not be substituted | Pool addresses, market-specific trades and original transactions |
 | DexScreener token listing | **Not verified** | Token-specific page matched to the verified mint |
 | CoinGecko application | **Not submitted / لم يُقدَّم بعد** | Submission receipt |
 | CoinMarketCap application | **Not submitted / لم يُقدَّم بعد** | Submission receipt |
@@ -28,6 +28,11 @@ This file describes repository documentation only. It is not proof of on-chain t
 
 ## Conflicting historical drafts
 Prior documents describe different supplies (1 million versus 1 billion), 6 versus 9 decimals, historical dates in 2024 versus draft dates in 2026, and conflicting proposed distributions (40/30/20/10, 80/10/5/5, or bonding-curve). None is endorsed as an approved live allocation. A token address in an old document is not proof it belongs to this project.
+
+## Important distinction: fees and mint identity
+Both candidate mint accounts use the original Solana SPL Token Program, which **does not support a Token-2022 native transfer-fee extension**. This is not a declaration of 0% total trade cost: network, routing, liquidity-provider and venue fees may apply. Neither observing a live mint nor seeing a verified Metaplex creator signature proves that the project GitHub account controls the mint authority. Revoked/null freeze authority means the mint has no account-freezing permission, **not that the token is cancelled or inactive**.
+
+A read-only [direct-RPC inspector](scripts/inspect_mints.py) and [daily audit](.github/workflows/onchain-mint-audit.yml) check both mint accounts separately. The monitoring does not authorize or sign on-chain changes, and is not a security audit.
 
 ## Before publishing any new verified claim
 - [ ] Confirm the mint address with owner-authenticated evidence.
