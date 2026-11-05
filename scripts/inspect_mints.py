@@ -28,11 +28,13 @@ MINTS = {
 EXPECTED = {
     "owner_reported": {
         "decimals": 9,
+        "supply_raw": "1000000000000000",
         "mint_authority": "28fU8SDMKLXe8hqmdy9dxYNHeddm7xQRzkxK16JLUpi4",
         "freeze_authority": None,
     },
     "historical_document": {
         "decimals": 6,
+        "supply_raw": "999992926771367",
         "mint_authority": None,
         "freeze_authority": None,
     },
@@ -106,7 +108,7 @@ def main(argv=None) -> int:
     parser.add_argument("--rpc", default="https://api.mainnet-beta.solana.com",
                         help="public Solana JSON-RPC endpoint; never include private credentials")
     parser.add_argument("--check", action="store_true",
-                        help="fail if the authority or decimals changed since 2026-11-05")
+                        help="fail if supply, authority, or decimals changed since 2026-11-05")
     args = parser.parse_args(argv)
     report = {
         "network": "solana-mainnet",
@@ -130,7 +132,7 @@ def main(argv=None) -> int:
                 })
     print(json.dumps(report, indent=2, ensure_ascii=False))
     if args.check and report["changes"]:
-        print("On-chain controls changed; review original transactions before editing published facts.",
+        print("On-chain supply or controls changed; review original transactions before editing published facts.",
               file=sys.stderr)
         return 1
     return 0
