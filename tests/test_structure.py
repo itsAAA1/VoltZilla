@@ -89,6 +89,14 @@ class SourceWebsiteIntegrity(unittest.TestCase):
         self.assertIn("100%", status)
         self.assertIn("Not verified", status)
 
+    def test_standard_token_program_explanation(self):
+        self.assertIn("بلا رسوم نقل مدمجة", self.html)
+        self.assertIn("لا توجد سلطة لتجميد حسابات الحاملين", self.html)
+        self.assertNotIn("الضريبة (قيد التحقق)", self.html)
+        status = (ROOT / "STATUS.md").read_text(encoding="utf-8")
+        self.assertIn("27 October 2024", status)
+        self.assertIn("not that the token is cancelled", status)
+
 
 if __name__ == "__main__":
     unittest.main()
