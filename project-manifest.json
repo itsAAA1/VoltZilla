@@ -5,7 +5,9 @@
     "symbol": "VZLA",
     "network": "solana-mainnet",
     "website_source": "https://github.com/itsAAA1/itsAAA1.github.io",
-    "confirmed_social_x": "https://x.com/voltzillasol1"
+    "confirmed_social_x": "https://x.com/voltzillasol1",
+    "launch_platform_source": "https://pump.fun/coin/GDYcemcZozG9ijhEZioRLRgNMtoxh1BBuV7nvdf1pump",
+    "pumpfun_metadata_social_x": "https://x.com/VoltZillaSOL"
   },
   "official_mint": null,
   "owner_identity_verified": false,
@@ -39,6 +41,33 @@
       "observed_largest_token_account_percent": null,
       "trading_pair_verified": false,
       "note": "Separate historical Pump.fun mint; owner-to-project association and executable market not established."
+    },
+    {
+      "id": "pumpfun_creator_linked_primary",
+      "mint": "GDYcemcZozG9ijhEZioRLRgNMtoxh1BBuV7nvdf1pump",
+      "observed_at_utc": "2026-11-19T22:35:58Z",
+      "name": "VoltZilla",
+      "symbol": "VZLA",
+      "decimals": 6,
+      "observed_supply": "1007005921.840554",
+      "token_program": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+      "mint_authority": null,
+      "freeze_authority": null,
+      "metadata_update_authority": null,
+      "observed_largest_token_account_percent": 99.3042819621409,
+      "bonding_curve_address": "6PpZaXsSnXCwm37W1PkMtmG1kCLjYNXk95eLoHMsFXBk",
+      "creator_wallet": "GGSqpEPw3WDvfqJRj6frvrTz1C2wcUz28Sgfdg2NNJiD",
+      "creation_tx": "2frB6tsVzkEyPuteLX35fSbcKvq16fj3UbwD5pyQnhm3Mhgbutc3FGrB64tFacggnP1dkrC37EL26hsKZKQVC23U",
+      "created_at_utc": "2026-04-04T13:11:41Z",
+      "creator_balance_observed": "7005921.840554",
+      "trading_pair_verified": false,
+      "pumpfun_bonding_curve": true,
+      "pumpfun_curve_complete": false,
+      "pumpfun_mayhem_mode": true,
+      "pumpfun_cashback_mode": true,
+      "last_observed_pumpfun_ui_liquidity_sol": "0.07",
+      "last_observed_pumpfun_24h_volume_usd": "0",
+      "notes": "PRIMARY CREATOR-MATCHED CANDIDATE. Pump.fun public token page names creator wallet and displays token profile; verified via canonical Solana safety and creator wallet trade history. DEX Screener returned [] for external token pairs. Pump.fun UI pool liquidity differs from indexed virtual curve reserves; never conflate. Do not assert owner-signed identity, CMC/CG listing, graduation, investment performance or tradable depth without separate evidence."
     }
   ],
   "release_gates": {
@@ -52,5 +81,7 @@
     "public_site_verified": false,
     "support_and_incident_runbook_ready": false
   },
-  "observations_note": "Dated read-only observations, not a live price, signed owner proof, exchange listing or investment recommendation."
+  "observations_note": "Dated read-only observations, not a live price, signed owner proof, exchange listing or investment recommendation.",
+  "preferred_mint_candidate": "GDYcemcZozG9ijhEZioRLRgNMtoxh1BBuV7nvdf1pump",
+  "preferred_mint_basis": "Pump.fun creator public profile and creation transaction identify project-owner supplied public wallet GGSqpEPw3WDvfqJRj6frvrTz1C2wcUz28Sgfdg2NNJiD as creator; signature binding that address to the human owner is still missing."
 }
