@@ -58,8 +58,8 @@ def validate(manifest):
         fail("Official account must match owner-confirmed source")
     candidates = manifest.get("candidates")
     ids, addresses = set(), set()
-    if not isinstance(candidates, list) or len(candidates) != 2:
-        fail("Exactly two historical candidates must be preserved until reconciliation")
+    if not isinstance(candidates, list) or len(candidates) != 3:
+        fail("Three separate candidate mints (including creator-linked Pump.fun mint) must be preserved until reconciliation")
         candidates = []
     for i, c in enumerate(candidates):
         if not isinstance(c, dict):
@@ -93,6 +93,22 @@ def validate(manifest):
                 fail(f"Candidate {i}: timestamp needs timezone")
         except (ValueError, TypeError, KeyError):
             fail(f"Candidate {i}: invalid observed timestamp")
+    preferred = manifest.get("preferred_mint_candidate")
+    if preferred is not None:
+        try:
+            decode_pubkey(preferred)
+            if preferred not in addresses:
+                fail("Preferred mint must match an inspected candidate")
+        except ValueError as e:
+            fail(f"Preferred mint: {e}")
+    if not any(
+        isinstance(c, dict) and
+        c.get("id") == "pumpfun_creator_linked_primary" and
+        c.get("mint") == preferred and
+        c.get("creator_wallet") == "GGSqpEPw3WDvfqJRj6frvrTz1C2wcUz28Sgfdg2NNJiD"
+        for c in candidates
+    ):
+        fail("Creator-linked primary Pump.fun mint evidence mismatch")
     official = manifest.get("official_mint")
     if official is not None:
         try:
