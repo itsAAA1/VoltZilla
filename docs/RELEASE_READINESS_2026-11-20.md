@@ -1,3 +1,5 @@
+> **ملحق تصحيحي مهم بتاريخ 20 نوفمبر 2026:** بعد هذا التقرير اكتُشف عقد ثالث على Pump.fun بتاريخ 4 أبريل 2026، عنوانه `GDYcemcZozG9ijhEZioRLRgNMtoxh1BBuV7nvdf1pump`، وتثبت بيانات Solana وPump.fun أن المنشئ هو محفظة صاحب المشروع الظاهرة `GGSqp…NJiD`. استنتاج «يوجد عنوانان فقط» في هذا التقرير أصبح قديمًا؛ الدليل الأحدث في [PUMPFUN_PRIMARY_AUDIT_2026-11-20.md](PUMPFUN_PRIMARY_AUDIT_2026-11-20.md). أبقينا النسخة الأصلية للتدقيق التاريخي.
+
 # VoltZilla (VZLA) — Release readiness audit
 **Review date:** 2026-11-20 (Asia/Riyadh)  
 **Status:** **BLOCKED for public token launch / NOT READY**  
