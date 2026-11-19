@@ -1,7 +1,9 @@
 # VoltZilla — سجل حالة التحقق / Verification status
-**Last document review:** 5 November 2026
+**Last document review:** 20 November 2026
 
 This file describes repository documentation only. It is not proof of on-chain token ownership or listing.
+
+**New prelaunch audit (20 Nov 2026):** [Release readiness and verification blockers](docs/RELEASE_READINESS_2026-11-20.md). Latest chain snapshot in that report was observed 19 Nov 2026 at 21:46 UTC; the snapshot below remains explicitly dated 5 November 2026. **Official mint and release readiness remain unverified.**
 
 | Item | Current status | Required evidence |
 |---|---|---|
