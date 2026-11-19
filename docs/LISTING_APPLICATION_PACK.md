@@ -41,11 +41,12 @@
 
 "فولت زيلا (VZLA) توكن مجتمعي على شبكة سولانا، أُنشئ عبر Pump.fun بتاريخ 4 أبريل 2026. عنوان العقد ومعاملة الإنشاء متاحان علنًا. وقت التدقيق كان منحنى التداول غير متخرج، ولم يظهر نشاط تداول يومي أو مجمع تداول خارجي مثبت. لا يحمل التوكن وعدًا بعائد أو ضمانًا للسيولة."
 
-## CoinGecko — possible Preview/Active review
+## CoinGecko — launched token; do not falsely apply as an upcoming TGE
 
 Official [submission](https://partner.coingecko.com/request-form/new) and [requirements](https://support.coingecko.com/articles/9489827481-how-to-list-a-new-cryptocurrency-on-coingecko):
-- If submitting a **Preview** request, describe accurately that the token already exists on Pump.fun but had no verified active venue/regular market volume at the inspection. CoinGecko decides whether it fits their preview policy.
-- For an **Active** request, provide a material, observed market with pool/exchange address and transactions; presently **missing**.
+- **Important correction to an earlier draft:** CoinGecko's special Preview guide requires verifiable announcement evidence of a scheduled **Token Generation Event (TGE)** and exchange plans. GDYcem was already created on **4 April 2026**, so **do not submit as a future/upcoming TGE or invent a new launch date**. Whether CoinGecko will accept a rare preview-style request for an already-issued inactive token is for their team to determine; we have no confirmation.
+- For a normal tracked/active request, CoinGecko's methodology requires an active market on an integrated exchange and verifiable trades; currently **not evidenced** by our checks. The ordinary free request is prepared but not yet a credible tracked-listing submission.
+- Official upcoming-token preview requirements: https://support.coingecko.com/articles/8781880141-how-to-preview-list-tokens-on-coingecko .
 - Ensure a controlled/verified social profile, genuine project contact, clear logo ownership and website referencing the same token contract. Do **not** misstate a third party's wallet as the project's address.
 - Choose free Regular Pass by default; paid Fast Pass is optional and not necessary for consideration.
 - **Prepared only; not sent, no tracking number.**
@@ -56,6 +57,8 @@ Official [request form](https://coinmarketcap.com/request/) and [listing criteri
 - Choose **1 - [New Listing] Add cryptoasset**.
 - Example subject: `VoltZilla - VZLA - New cryptoasset listing request`.
 - Supply the GDYcem mint, creation transaction, Pump.fun link, public project site, a confirmed project social and accurate token program; attach no secrets or recovery keys.
+- The [CMC form](https://support.coinmarketcap.com/hc/en-us/requests/new?ticket_form_id=360000493112) specifically requires an accurately formatted subject, project relation and date, description, categories, and a **transparent square 200×200 PNG project logo**. The logo variant and proof of rights need checking.
+- For contract-address verification, CMC asks for a public announcement from a social account linked to the official website. No connected posting account or matching owner-signed announcement has been confirmed, so **this is a current real submission blocker**.
 - Avoid requesting **tracked** market status without evidence of significant live trading on a CMC-tracked venue. CMC may surface unverified DEXScan pages automatically; that is not a reviewed tracked listing.
 - CMC says the official form is the only accepted channel and duplicate requests can delay consideration.
 - **Prepared only; not sent, no ticket number.**
@@ -71,7 +74,9 @@ Official [request form](https://coinmarketcap.com/request/) and [listing criteri
 - [ ] Reconcile `@VoltZillaSOL` on immutable metadata vs `@voltzillasol1` reported by owner
 - [ ] Verify logo ownership/use rights and original Pump image consistency
 - [ ] Clearly identify legal issuer/contact and obtain relevant local legal review before investment-directed promotion
-- [ ] Decide Preview eligibility vs documented active market and record real DEX volume
+- [ ] Do not claim a future TGE; document market eligibility and genuine DEX trading activity
+- [ ] Provide transparent 200×200 PNG logo matched to project identity
+- [ ] Publish authentic token contract announcement from verified social account already listed on the site
 - [ ] Authenticated portal login/CAPTCHA and actual final form submission (requires portal access)
 - [ ] Preserve confirmation email / case number / final outcome
 
