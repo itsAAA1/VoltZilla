@@ -57,7 +57,7 @@ There are additional coins using the label VoltZilla/VZLA on Solana. **Only exac
 
 ## 5. Listing workflow and current submission state
 
-**CoinGecko:** exact GDYcem token search returned NOT_FOUND. Official application https://partner.coingecko.com/request-form/new offers:
+**CoinGecko:** exact GDYcem token search returned NOT_FOUND. **Correction (20 Nov):** Preview listings demand official evidence of a scheduled future Token Generation Event. The GDY token was already created in April 2026; do not misrepresent it as an upcoming TGE to evade active-market criteria. Official application https://partner.coingecko.com/request-form/new offers:
 - Active listing: requires active trading on a tracked venue.
 - **Preview Mode**: available even without an actively trading market; the application still undergoes project screening and may be rejected.
 - Standard/Regular Pass: free; Fast Pass is optional and not required for eligibility.
@@ -69,7 +69,7 @@ There are additional coins using the label VoltZilla/VZLA on Solana. **Only exac
 
 ## 6. Current cost and liquidity — no speculative financial promises
 
-For illustration only, **SOL ≈ US$73**, US$1 ≈ SAR 3.75 (historical/current indicative sources in November 2026); costs change with network, SOL price, venue and market demand:
+For illustration only, **SOL ≈ US$73.04**, US$1 ≈ SAR 3.75 (historical/current indicative sources in November 2026); costs change with network, SOL price, venue and market demand:
 
 | Path | Cost | Interpretation |
 |---|---|---|
