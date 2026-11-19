@@ -145,7 +145,7 @@ def reconcile_holders(supply_ui, accounts, decimals):
     return {
         "supply_ui": str(supply_ui),
         "accounted_ui": str(Decimal(amount_sum) / unit),
-        "unaccounted_ui": str((raw_supply - amount_sum) / unit),
+        "unaccounted_ui": "0" if raw_supply == amount_sum else str((raw_supply - amount_sum) / unit),
         "pool_share_percent": pct_owner(POOL),
         "creator_share_percent": pct_owner(CREATOR),
         "holders": holders,
