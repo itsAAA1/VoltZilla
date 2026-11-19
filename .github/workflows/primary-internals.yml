@@ -1,0 +1,30 @@
+name: VoltZilla primary contract internals (read-only)
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '37 3 * * *'
+  push:
+    paths:
+      - scripts/audit_primary_internals.py
+      - tests/test_primary_internals.py
+      - .github/workflows/primary-internals.yml
+permissions:
+  contents: read
+jobs:
+  internals:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify binary Token-2022 parser and supply reconciliation offline
+        run: python3 -m unittest discover -s tests -p "test_primary_internals.py" -v
+      - name: Inspect GDY mint authorities, extensions and top token accounts from Solana mainnet
+        run: python3 scripts/audit_primary_internals.py --check > primary-internals.json
+      - name: Preserve timestamped on-chain evidence JSON
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: voltzilla-primary-token-internals
+          path: primary-internals.json
+          if-no-files-found: warn
+          retention-days: 30
