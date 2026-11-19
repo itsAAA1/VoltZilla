@@ -50,6 +50,16 @@ class InspectMintTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             parse_mint(raw)
 
+    def test_token_2022_mint_with_extensions(self):
+        extended = self.build_mint(1_007_005_921_840_554, 6, False, False) + bytes(128)
+        parsed = parse_mint(extended)
+        self.assertEqual(parsed["supply_ui"], "1007005921.840554")
+        self.assertIsNone(parsed["mint_authority"])
+        self.assertIsNone(parsed["freeze_authority"])
+        self.assertEqual(MINTS["pumpfun_creator_linked_primary"],
+                         "GDYcemcZozG9ijhEZioRLRgNMtoxh1BBuV7nvdf1pump")
+        self.assertEqual(EXPECTED["pumpfun_creator_linked_primary"]["decimals"], 6)
+
     def test_candidate_addresses_are_distinct(self):
         self.assertNotEqual(MINTS["owner_reported"], MINTS["historical_document"])
         self.assertNotEqual(EXPECTED["owner_reported"]["decimals"],

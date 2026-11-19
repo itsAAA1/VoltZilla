@@ -1,3 +1,5 @@
+> **20 نوفمبر 2026 — تصحيح فني:** عُثر على عقد Pump.fun الأصلي المرتبط بمحفظة المنشئ `GDYcemcZozG9ijhEZioRLRgNMtoxh1BBuV7nvdf1pump`. أرجع DexScreener لواجهته الخاصة بأزواج التداول الخارجية مصفوفة فارغة في الفحص الحالي، بينما صفحة Pump.fun تعرض منحنى تداول غير متخرج. **ليس شرطًا وجود Raydium حاليًا، ولا يلزم دفع مبلغ لتحديث الصفحة.** تفاصيل العقد والمصادر في [PUMPFUN_PRIMARY_AUDIT_2026-11-20.md](PUMPFUN_PRIMARY_AUDIT_2026-11-20.md).
+
 # 📊 DexScreener Token Update Request — VoltZilla (VZLA)
 
 > **الحالة: لم يُقدَّم أي طلب بعد.** بيانات العقد والسيولة غير معتمدة، ولا يوجد رابط زوج تداول موثّق. حساب X المؤكد: https://x.com/voltzillasol1

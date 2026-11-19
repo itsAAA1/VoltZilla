@@ -26,8 +26,20 @@ class ReleasePreflightTests(unittest.TestCase):
 
     def test_different_mints_cannot_be_merged(self):
         mints = [c["mint"] for c in self.data["candidates"]]
-        self.assertEqual(len(set(mints)), 2)
+        self.assertEqual(len(set(mints)), 3)
         self.assertEqual({c["decimals"] for c in self.data["candidates"]}, {6, 9})
+
+    def test_creator_linked_pumpfun_mint_kept_separate(self):
+        primary = next(c for c in self.data["candidates"] if c["id"] == "pumpfun_creator_linked_primary")
+        self.assertEqual(primary["mint"], self.data["preferred_mint_candidate"])
+        self.assertEqual(primary["creator_wallet"], "GGSqpEPw3WDvfqJRj6frvrTz1C2wcUz28Sgfdg2NNJiD")
+        self.assertEqual(primary["token_program"], "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb")
+        self.assertFalse(primary["pumpfun_curve_complete"])
+        self.assertIsNone(self.data["official_mint"])
+
+    def test_unknown_preferred_mint_is_rejected(self):
+        self.data["preferred_mint_candidate"] = "11111111111111111111111111111111"
+        self.assertTrue(any("Preferred mint" in e for e in preflight.validate(self.data)))
 
     def test_fake_mint_is_rejected(self):
         self.data["official_mint"] = "not-a-solana-address"

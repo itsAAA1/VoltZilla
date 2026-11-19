@@ -1,3 +1,5 @@
+> **تصحيح 20 نوفمبر 2026 — الأحدث:** ظهر عقد VoltZilla على Pump.fun بعنوان `GDYcemcZozG9ijhEZioRLRgNMtoxh1BBuV7nvdf1pump`. يُظهر Pump.fun وسجل Solana أن منشئه محفظة `GGSqpEPw3WDvfqJRj6frvrTz1C2wcUz28Sgfdg2NNJiD` التي عرضها صاحب المشروع. تاريخ الإنشاء 4 أبريل 2026. المنحنى غير متخرج، والحيازات/السيولة بيانات وقتية. هذا يختلف عن عنوان المليون وعن عقد 2024؛ **المراجع القديمة أدناه تاريخية وتصححها الوثيقة** [PUMPFUN_PRIMARY_AUDIT_2026-11-20.md](docs/PUMPFUN_PRIMARY_AUDIT_2026-11-20.md). إثبات ملكية توقيع المحفظة والتداول النشط وطلبات الإدراج لا تزال غير مكتملة.
+
 # VoltZilla — سجل حالة التحقق / Verification status
 **Last document review:** 20 November 2026
 

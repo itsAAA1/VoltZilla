@@ -19,7 +19,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
-      - name: Inspect both Solana mint candidates (no wallet signing)
+      - name: Inspect three distinct SPL / Token-2022 mints (no wallet signing)
         run: python3 scripts/inspect_mints.py --check > mint-audit.json
       - name: Attach public-readonly observation
         if: always()

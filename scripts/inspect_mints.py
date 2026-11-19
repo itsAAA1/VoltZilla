@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Read-only SPL Token mint inspector for two documented VoltZilla candidates.
+"""Read-only SPL / Token-2022 mint inspector for three documented VZLA contracts.
 
 This tool reads on-chain account data; it never signs a transaction or claims
-that either candidate belongs to the project owner.
+that a wallet holder is the human project owner.
 
 Usage:
   python3 scripts/inspect_mints.py
@@ -20,10 +20,12 @@ from datetime import datetime, timezone
 from decimal import Decimal
 
 TOKEN_PROGRAM = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+TOKEN_2022_PROGRAM = "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
 ALPHABET = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
 MINTS = {
     "owner_reported": "DHxStA9nRq6DdhBKT89s38fpxD9wE7MtyMn9HMuWeyN9",
     "historical_document": "JBaHDseUdFEVbAik7rojwC8ZZ8EjyBi1qQPoK9tLpump",
+    "pumpfun_creator_linked_primary": "GDYcemcZozG9ijhEZioRLRgNMtoxh1BBuV7nvdf1pump",
 }
 EXPECTED = {
     "owner_reported": {
@@ -35,6 +37,12 @@ EXPECTED = {
     "historical_document": {
         "decimals": 6,
         "supply_raw": "999992926771367",
+        "mint_authority": None,
+        "freeze_authority": None,
+    },
+    "pumpfun_creator_linked_primary": {
+        "decimals": 6,
+        "supply_raw": "1007005921840554",
         "mint_authority": None,
         "freeze_authority": None,
     },
@@ -59,8 +67,8 @@ def decode_coption_pubkey(data: bytes, offset: int):
 
 
 def parse_mint(raw: bytes) -> dict:
-    if len(raw) != 82:
-        raise ValueError(f"expected 82-byte standard SPL mint; got {len(raw)}")
+    if len(raw) < 82:
+        raise ValueError(f"expected at least 82-byte SPL/Token-2022 mint; got {len(raw)}")
     if raw[45] != 1:
         raise ValueError("mint account is not initialized")
     supply_raw = struct.unpack_from("<Q", raw, 36)[0]
@@ -92,8 +100,9 @@ def get_account(rpc_url: str, mint: str) -> dict:
     account = data.get("value")
     if not account:
         raise ValueError(f"mint not found: {mint}")
-    if account.get("owner") != TOKEN_PROGRAM:
-        raise ValueError(f"unsupported token program: {account.get('owner')}")
+    expected_program = TOKEN_2022_PROGRAM if mint == MINTS["pumpfun_creator_linked_primary"] else TOKEN_PROGRAM
+    if account.get("owner") != expected_program:
+        raise ValueError(f"unsupported/unexpected token program: {account.get('owner')}")
     encoded = account.get("data")
     if not isinstance(encoded, list) or len(encoded) < 2 or encoded[1] != "base64":
         raise ValueError("unexpected RPC account encoding")
@@ -108,13 +117,13 @@ def main(argv=None) -> int:
     parser.add_argument("--rpc", default="https://api.mainnet-beta.solana.com",
                         help="public Solana JSON-RPC endpoint; never include private credentials")
     parser.add_argument("--check", action="store_true",
-                        help="fail if supply, authority, or decimals changed since 2026-11-05")
+                        help="fail if mint supply, authority or decimals changed relative to per-mint dated snapshot")
     args = parser.parse_args(argv)
     report = {
         "network": "solana-mainnet",
         "observed_at_utc": datetime.now(timezone.utc).isoformat(),
         "official_mint": None,
-        "notes": "Candidate labels are documentation only; a wallet signature is needed to prove ownership.",
+        "notes": "The Pump.fun mint matches the observed creator wallet, but human ownership still needs current signature proof. Other mints are distinct and must not be substituted.",
         "mints": {}, "changes": [],
     }
     for label, mint in MINTS.items():
