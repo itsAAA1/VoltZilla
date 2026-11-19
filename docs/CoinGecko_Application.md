@@ -1,3 +1,5 @@
+> **20 نوفمبر 2026 — تصحيح بعد التحقق:** العقد الذي أنشأته محفظة مشروع VoltZilla فعليًا عبر Pump.fun هو `GDYcemcZozG9ijhEZioRLRgNMtoxh1BBuV7nvdf1pump`. عنوان المليون أدناه توكن آخر ولا يُستخدم في طلب الإدراج. **راجع ملف الطلب الجديد:** [LISTING_APPLICATION_PACK.md](LISTING_APPLICATION_PACK.md). لم يُقدّم طلب؛ يتوفر خيار CoinGecko Preview للتوكن الذي لم يبدأ تداوله النشط، لكن القرار للمنصة.
+
 # CoinGecko listing application — VoltZilla (VZLA)
 
 > **الحالة: لم يُقدَّم طلب بعد / NOT SUBMITTED.** هذه مسودة إعداد داخلية فقط، ولا يوجد دليل على تقديمها أو مراجعتها أو قبول إدراج العملة لدى CoinGecko.
