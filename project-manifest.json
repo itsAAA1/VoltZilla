@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "project": {
+    "name": "VoltZilla",
+    "symbol": "VZLA",
+    "network": "solana-mainnet",
+    "website_source": "https://github.com/itsAAA1/itsAAA1.github.io",
+    "confirmed_social_x": "https://x.com/voltzillasol1"
+  },
+  "official_mint": null,
+  "owner_identity_verified": false,
+  "candidates": [
+    {
+      "id": "owner_reported",
+      "mint": "DHxStA9nRq6DdhBKT89s38fpxD9wE7MtyMn9HMuWeyN9",
+      "observed_at_utc": "2026-11-19T21:46:18Z",
+      "name": "VoltZilla",
+      "symbol": "VZLA",
+      "decimals": 9,
+      "observed_supply": "1000000",
+      "mint_authority": "28fU8SDMKLXe8hqmdy9dxYNHeddm7xQRzkxK16JLUpi4",
+      "freeze_authority": null,
+      "metadata_mutable": true,
+      "observed_largest_token_account_percent": 100,
+      "trading_pair_verified": false,
+      "note": "Previously owner-reported mint; wallet authority and project identity have not been cryptographically established."
+    },
+    {
+      "id": "historical_document",
+      "mint": "JBaHDseUdFEVbAik7rojwC8ZZ8EjyBi1qQPoK9tLpump",
+      "observed_at_utc": "2026-11-19T21:46:19Z",
+      "name": "VOLTzilla",
+      "symbol": "VZLA",
+      "decimals": 6,
+      "observed_supply": "999992926.771367",
+      "mint_authority": null,
+      "freeze_authority": null,
+      "metadata_mutable": false,
+      "observed_largest_token_account_percent": null,
+      "trading_pair_verified": false,
+      "note": "Separate historical Pump.fun mint; owner-to-project association and executable market not established."
+    }
+  ],
+  "release_gates": {
+    "owner_signed_identity_proof": false,
+    "official_mint_approved": false,
+    "tokenomics_and_allocation_verified": false,
+    "authority_policy_approved": false,
+    "trading_pair_and_liquidity_verified": false,
+    "independent_security_review": false,
+    "legal_and_marketing_review": false,
+    "public_site_verified": false,
+    "support_and_incident_runbook_ready": false
+  },
+  "observations_note": "Dated read-only observations, not a live price, signed owner proof, exchange listing or investment recommendation."
+}
