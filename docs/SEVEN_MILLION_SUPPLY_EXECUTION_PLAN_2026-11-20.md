@@ -31,3 +31,9 @@ If, and ONLY IF, the owner proves they currently control **28fU8...Upi4**, elect
 
 ## Why no payment was requested or token minted
 No transaction signature was supplied, wallet control has not been proven, and `official_mint=null`. This is a technically actionable plan, not confirmation that an on-chain supply change occurred. **No funds were transferred and no VZLA were issued during this review.**
+
+## Official Raydium clarification, independently researched 2026-11-20
+**Raydium does not impose a universal 7,000,000 VZLA token-supply requirement.** Its LaunchLab creation documentation explicitly states that total supply is configurable **at token creation**, then fixed for that launch. A separate LaunchLab **graduation SOL fundraising target** has a 24 SOL minimum in configurable mode, while JustSendit is described as targeting 85 SOL. Neither is a flat payment of 7 million tokens nor necessarily an upfront creation fee. Source: https://github.com/raydium-io/raydium-docs-v1/blob/main/user-flows/creating-a-launchlab-token.mdx .
+
+The 7,005,921.840554 VZLA seen at the GDY Pump.fun creator wallet is an **observed token balance in a different mint**, not Raydium's required token supply or a payment owed. If someone has demanded 7 million VZLA or SAR, the demanding party, exact contract, amount, service and invoice/message source still need independent verification. **Do not transfer tokens on the basis of a UI number or somebody else's unverified request.**
+
