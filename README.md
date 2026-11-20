@@ -136,3 +136,12 @@ python3 -m unittest discover -s tests -p "test_*.py" -v
 Made with ⚡ by the VoltZilla Community
 
 </div>
+
+---
+
+## 🧭 مراجع المشروعين والتصحيحات — 20 نوفمبر 2026
+
+- **VoltZilla / VZLA:** [مطابقة العقود الأربعة والهوية](docs/FOUR_MINT_RECONCILIATION_2026-11-20.md) — لا يوجد عنوان `official_mint` معتمد بتوقيع حالي بعد.
+- **MegaVoltX / MVX:** [سجل المشروع الثاني المستقل](docs/MEGAVOLTX_STATUS_2026-11-20.md) — الاسم والرمز ومليار توكن في مرحلة المقترح؛ لم يثبت عقد MVX منشأ مرتبط بالمشروع.
+- **تصحيح Genspark:** [قائمة الأخطاء وما أصلح بالموقع](docs/GENSPARK_LEGACY_CORRECTIONS_2026-11-20.md) — موقع GitHub Pages أدق من Genspark القديم؛ تحديث Genspark وX يتطلب حساب النشر أو الملف الشخصي نفسه.
+- **الموقع المحدّث:** https://itsaaa1.github.io/ — فُحص مباشرًا بعد تعديل قائمة الجوال والتنبيه.
