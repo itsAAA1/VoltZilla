@@ -1,0 +1,17 @@
+{
+  "execution_enabled": false,
+  "assets": {
+    "SOL": {
+      "decimals": 9,
+      "max_transfer_units": "0.01",
+      "daily_units": "0.02",
+      "recipients": []
+    },
+    "USDC": {
+      "decimals": 6,
+      "max_transfer_units": "5",
+      "daily_units": "10",
+      "recipients": []
+    }
+  }
+}
