@@ -27,6 +27,19 @@ POOL = "6PpZaXsSnXCwm37W1PkMtmG1kCLjYNXk95eLoHMsFXBk"
 CREATOR = "GGSqpEPw3WDvfqJRj6frvrTz1C2wcUz28Sgfdg2NNJiD"
 EXPECTED_SUPPLY_RAW = "1007005921840554"
 EXPECTED_EXTENSIONS = {"MetadataPointer", "TokenMetadata"}
+# Only a FALLBACK sample of the three token accounts observed in the dated
+# canonical safety snapshot, NOT an exhaustive live token-account index.
+KNOWN_ACCOUNTS = (
+    "HRa4LY8PLdhKG9YUvxafqjFzaqD7bXAiWU9FodrSpA9T",
+    "EPKbdTsaYqqBGcjHHcEWM7EyHr8Buzqw3rGPB1wsCCf1",
+    "HCK1BeLUUnB7pbveuG2jmf4u1r4TpAKE1QQmt4M1wcUJ",
+)
+# Public endpoint list, selected only after failing the preceding provider.
+DEFAULT_RPCS = (
+    "https://solana-rpc.publicnode.com",
+    "https://public-solana-mainnet.rpcnode.dev",
+    "https://api.mainnet-beta.solana.com",
+)
 
 # Solana Token-2022 ExtensionType values, not a whitelist of safe extensions.
 # Unknown future extensions fail closed in the strict on-chain check.
@@ -98,6 +111,15 @@ def parse_token_account(raw, expected_mint):
         "owner": b58encode(raw[32:64]),
         "amount_raw": str(struct.unpack_from("<Q", raw, 64)[0]),
     }
+
+
+def select_token_accounts(largest):
+    """Use provider-discovered top-20 when possible, else labelled partial sample."""
+    if largest is None:
+        return list(KNOWN_ACCOUNTS), "known_snapshot_partial"
+    if not isinstance(largest, list):
+        raise ValueError("unexpected largest token account response type")
+    return [entry["address"] for entry in largest], "rpc_top20"
 
 
 def describe_authorities(state):
@@ -202,11 +224,17 @@ def observe(rpc_url):
         raise ValueError("unexpected primary mint decimal precision")
     if mint["mint_authority"] is not None or mint["freeze_authority"] is not None:
         raise ValueError("unexpected active mint or freeze authority")
-    largest = rpc_call(rpc_url, "getTokenLargestAccounts", [MINT, {"commitment": "finalized"}])
-    summary = largest.get("value")
-    if not isinstance(summary, list):
-        raise ValueError("getTokenLargestAccounts result malformed")
-    addrs = [v["address"] for v in summary]
+    # Some free public Solana endpoints rate-limit this expensive index method.
+    # Canonical balance and account ownership are still verifiable via read-only
+    # getMultipleAccounts on *known* account addresses; label partial coverage.
+    largest, summary, largest_error = None, None, None
+    try:
+        largest = rpc_call(rpc_url, "getTokenLargestAccounts",
+                           [MINT, {"commitment": "finalized"}], attempts=2)
+        summary = largest.get("value")
+    except (ValueError, RuntimeError, urllib.error.URLError, OSError) as exc:
+        largest_error = type(exc).__name__ + ": " + str(exc)[:180]
+    addrs, account_scope = select_token_accounts(summary)
     if len(set(addrs)) != len(addrs):
         raise ValueError("duplicate largest-token-account address")
     owner_lookup = rpc_call(rpc_url, "getMultipleAccounts",
@@ -219,8 +247,9 @@ def observe(rpc_url):
         if not acct or acct.get("owner") != PROGRAM:
             raise ValueError(f"missing or invalid token account {label}")
         details = parse_token_account(decode_rpc_bytes(acct), MINT)
-        # Each call can observe a different finalized slot; fail rather than invent reconciliation.
-        if details["amount_raw"] != str(reported["amount"]):
+        # Distinct finalized RPC calls may observe different slots; flag instead
+        # of silently inventing a reconciled quantity.
+        if summary is not None and details["amount_raw"] != str(reported["amount"]):
             raise ValueError("RPC returned differing token amounts across sampled slots")
         parsed.append({**details, "raw": details["amount_raw"], "token_account": label})
     alloc = reconcile_holders(Decimal(mint["supply_ui"]), parsed, mint["decimals"])
@@ -238,13 +267,16 @@ def observe(rpc_url):
         "source": "direct read-only Solana JSON-RPC (finalized)",
         "slots": {
             "mint": mint_info.get("context", {}).get("slot"),
-            "largest": largest.get("context", {}).get("slot"),
+            "largest": largest.get("context", {}).get("slot") if largest else None,
             "owners": owner_lookup.get("context", {}).get("slot"),
         },
         "mint_state": mint,
         "authorities": describe_authorities(mint),
         "extensions": extension_list,
         "holders": alloc,
+        "holder_discovery": {"coverage": account_scope,
+                             "largest_account_rpc_error": largest_error,
+                             "note": "Top 20 is not a holder census. When known_snapshot_partial, no live discovery of other token accounts was possible."},
         "review_flags": flags,
         "mayhem_cashback_note": "Mayhem/cashback settings are Pump.fun program account state; this mint-level RPC scan does not independently parse agent parameters or trade execution.",
         "ownership_note": "Creator wallet is on-chain provenance, but no human owner signature was requested or produced.",
@@ -253,13 +285,21 @@ def observe(rpc_url):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--rpc", default="https://api.mainnet-beta.solana.com")
+    parser.add_argument("--rpc", action="append", default=[],
+                        help="may be specified more than once; otherwise try public RPC fallback list")
     parser.add_argument("--check", action="store_true", help="fail if current internals differ from documented review baseline")
     args = parser.parse_args(argv)
-    try:
-        report = observe(args.rpc)
-    except (ValueError, RuntimeError, urllib.error.URLError, OSError) as exc:
-        print(f"PRIMARY AUDIT UNAVAILABLE: {exc}", file=sys.stderr)
+    report, errors = None, []
+    for url in (args.rpc or DEFAULT_RPCS):
+        try:
+            report = observe(url)
+            report["rpc_endpoint"] = url
+            break
+        except (ValueError, RuntimeError, urllib.error.URLError, OSError) as exc:
+            errors.append({"endpoint": url, "error": str(exc)[:260]})
+            print(f"RPC endpoint unavailable or inconsistent ({url}): {exc}", file=sys.stderr)
+    if report is None:
+        print(json.dumps({"verified": False, "errors": errors}, indent=2), file=sys.stderr)
         return 2
     print(json.dumps(report, ensure_ascii=False, indent=2))
     flags = report["review_flags"]
