@@ -58,8 +58,8 @@ def validate(manifest):
         fail("Official account must match owner-confirmed source")
     candidates = manifest.get("candidates")
     ids, addresses = set(), set()
-    if not isinstance(candidates, list) or len(candidates) != 3:
-        fail("Three separate candidate mints (including creator-linked Pump.fun mint) must be preserved until reconciliation")
+    if not isinstance(candidates, list) or len(candidates) != 4:
+        fail("Four separate candidate mints (including creator-linked Pump.fun and Raydium mints) must be preserved until reconciliation")
         candidates = []
     for i, c in enumerate(candidates):
         if not isinstance(c, dict):

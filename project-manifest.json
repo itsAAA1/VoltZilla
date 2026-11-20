@@ -68,6 +68,28 @@
       "last_observed_pumpfun_ui_liquidity_sol": "0.07",
       "last_observed_pumpfun_24h_volume_usd": "0",
       "notes": "PRIMARY CREATOR-MATCHED CANDIDATE. Pump.fun public token page names creator wallet and displays token profile; verified via canonical Solana safety and creator wallet trade history. DEX Screener returned [] for external token pairs. Pump.fun UI pool liquidity differs from indexed virtual curve reserves; never conflate. Do not assert owner-signed identity, CMC/CG listing, graduation, investment performance or tradable depth without separate evidence."
+    },
+    {
+      "id": "raydium_launchlab_creator_linked",
+      "mint": "3cPWF3eKjcq4Y8d2oVXDRaN8ipKBHuyK1uYWY4GT7ray",
+      "observed_at_utc": "2026-11-20T05:18:06.643Z",
+      "name": "VoltZilla",
+      "symbol": "VZLA",
+      "decimals": 6,
+      "observed_supply": "1000000000",
+      "token_program": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+      "mint_authority": null,
+      "freeze_authority": null,
+      "metadata_update_authority": "WLHv2UAZm6z4KyaaELi5pjdbJh6RESMva1Rnn8pJVVh",
+      "metadata_mutable": false,
+      "deployer": "28fU8SDMKLXe8hqmdy9dxYNHeddm7xQRzkxK16JLUpi4",
+      "indexed_metadata_creator": "WLHv2UAZm6z4KyaaELi5pjdbJh6RESMva1Rnn8pJVVh",
+      "creation_tx": "3NybCdX9VssTzAdM2TKDNPnGWTn6SNr1H4GjzEDpVSeThxrE8kiasCZnHbnfjApZcUTonYqNe5WfA2XcnnCLkvA8",
+      "created_at_utc": "2026-05-15T04:57:04Z",
+      "indexed_launchlab_pool": "J1nse1K58AcjDEtCdkL7nFByUNwjGuTkupxiKtwuxXAz",
+      "pool_graduated": false,
+      "trading_pair_verified": false,
+      "notes": "Distinct Raydium LaunchLab token. Helius canonical mint verified on 2026-11-20; Solana Tracker index reports deployer 28fU8 and a LaunchLab bonding-curve pool with 24h volume 0 at its stale/undated snapshot. Pool is not evidence of graduated Raydium CPMM market. Holder wallet control not owner-signed. Metadata creators can differ from actual deployer. Do not merge with GDY Pump token."
     }
   ],
   "release_gates": {
