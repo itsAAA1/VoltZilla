@@ -18,8 +18,20 @@ def raw_mint(exts=(18, 19), supply=1007005921840554):
     raw = bytearray(166)
     struct.pack_into("<Q", raw, 36, supply)
     raw[44], raw[45], raw[165] = 6, 1, 1
+    def string(value):
+        b=value.encode("utf-8")
+        return struct.pack("<I", len(b)) + b
     for kind in exts:
-        raw += struct.pack("<HH", kind, 3) + b"abc"
+        if kind == 18:
+            payload = bytes(32) + audit.decode_pubkey(MINT)
+        elif kind == 19:
+            payload = (bytes(32) + audit.decode_pubkey(MINT)
+                       + string("VoltZilla") + string("VZLA")
+                       + string("https://ipfs.io/ipfs/test")
+                       + struct.pack("<I", 0))
+        else:
+            payload = b"abc"
+        raw += struct.pack("<HH", kind, len(payload)) + payload
     return bytes(raw)
 
 
@@ -55,6 +67,31 @@ class PrimaryTokenInternalsTests(unittest.TestCase):
     def test_fails_closed_for_unknown_extension_types(self):
         ext = audit.parse_mint_extensions(raw_mint((18, 999)))
         self.assertEqual(audit.risk_extension_names(ext), ["Unknown(999)"])
+
+
+    def test_validates_pointer_and_embedded_metadata_authorities(self):
+        raw = raw_mint()
+        decoded = audit.parse_embedded_metadata(raw, audit.parse_mint_extensions(raw), MINT)
+        self.assertIsNone(decoded["metadata_pointer_update_authority"])
+        self.assertIsNone(decoded["token_metadata_update_authority"])
+        self.assertEqual(decoded["metadata_pointer_target"], MINT)
+        self.assertEqual(decoded["name"], "VoltZilla")
+        self.assertEqual(decoded["symbol"], "VZLA")
+        self.assertIn("ipfs", decoded["uri"])
+
+    def test_detects_active_metadata_pointer_even_with_revoked_mint_authority(self):
+        raw = bytearray(raw_mint())
+        metadata_pointer_value_start = 166 + 4
+        raw[metadata_pointer_value_start:metadata_pointer_value_start+32] = audit.decode_pubkey(CREATOR)
+        decoded = audit.parse_embedded_metadata(bytes(raw), audit.parse_mint_extensions(bytes(raw)), MINT)
+        self.assertEqual(decoded["metadata_pointer_update_authority"], CREATOR)
+
+    def test_rejects_fake_mismatched_embedded_metadata_mint(self):
+        raw = bytearray(raw_mint())
+        metadata_value_start = 166 + 4 + 64 + 4
+        raw[metadata_value_start+32:metadata_value_start+64] = bytes([9])*32
+        with self.assertRaises(ValueError):
+            audit.parse_embedded_metadata(bytes(raw), audit.parse_mint_extensions(bytes(raw)), MINT)
 
     def test_reads_raw_token_account_owners_and_exact_balance(self):
         a = audit.parse_token_account(raw_token_account(CREATOR, 7005921840554), MINT)
