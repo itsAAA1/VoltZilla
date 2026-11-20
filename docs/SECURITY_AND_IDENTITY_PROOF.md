@@ -38,6 +38,14 @@ The exact signed bytes, signature (Base58/Base64 as specified), and signer publi
 - [ ] Independent legal advice for proposed fundraising and public marketing; no certification available here.
 - [ ] Detect lookalike sites and false DEX listings; maintain escalation contact through [GitHub Issues](https://github.com/itsAAA1/VoltZilla/issues).
 
+## Wallet access and credential-exposure response
+
+- A public address or on-chain creation transaction **cannot reveal a secret key**, and a read-only connection to Phantom cannot discover every separate recovery phrase imported in the past.
+- If a seed phrase or private key has been copied to an untrusted environment, treat all addresses derived from that phrase/key as potentially exposed. Revoke dApp access where appropriate, but note that revoking app permissions **does not rotate a private key**.
+- Restore an older wallet only with its original trusted Apple/Google sign-in, original recovery phrase, or its original per-account private key **inside the wallet application**. Creating a new account from a different phrase will not recreate the old creator address.
+- For a potentially exposed wallet that still has assets, generate an entirely new wallet with independently stored recovery material and migrate legitimate holdings through owner-approved transactions after verifying the new receiving address. Check fees and supported assets; never migrate untrusted spam assets automatically.
+- Never paste recovery material into GitHub, websites, chat messages, freelance marketplaces, or automated agents. A public-key match or a wallet-signature test must not be described as historical custody proof beyond its actual scope.
+
 ## Non-reversible vs safe actions
 - Safe read-only: explorer lookups, checks, calculating fees, status/docs/FAQ updates.
 - Requires public confirmation and exact amounts: transfers, buys, buys to move the Pump curve, LP deposits, exchange fees, wallet migrations.
