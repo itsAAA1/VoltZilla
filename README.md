@@ -153,3 +153,13 @@ Made with ⚡ by the VoltZilla Community
 - [خطة 7 ملايين توكن](docs/SEVEN_MILLION_SUPPLY_EXECUTION_PLAN_2026-11-20.md) — يتطلب ذلك تحقق المحفظة `28fU8...` واختيار عقد المليون الأصلي؛ GDY ذو صلاحية سك ملغاة، ولم تُنفذ أي زيادة.
 - [توقيع الرسالة لمحفظة SPL ذات المليون (بدون معاملة)](https://itsaaa1.github.io/verify-spl-wallet.html) — يثبت التحكم عند التوقيع فقط.
 - [تحديث التدقيق الأمني والفشل التاريخي للـCI](docs/SECURITY_REVIEW_UPDATE_2026-11-20.md) — مراجعة داخلية وليست شهادة مستقلة؛ لا تدعي نجاح سجل GitHub Actions لم يُشاهد ناجحًا.
+
+## 🤖 Agent Finance — November 2026 implementation
+
+- [Operational finance research for Saudi merchants, licensed Open Banking/PIS and Solana](docs/FINANCIAL_AI_EXECUTION_OPTIONS_KSA_2026-11-20.md)
+- [Tested financial intent policy / SQLite ledger](agent-finance/treasury.py) — **reserves only, does not send funds**
+- [Read-only live Solana RPC mint/supply inspector](agent-finance/solana_snapshot.py) — **cannot mint tokens or transfer assets**
+- [Unit tests and CI workflow](agent-finance/README.md) — 11 local tests passed; no successful current CI run verified
+- [Raydium no blanket seven-million requirement and the conditional one-million-mint supply plan](docs/SEVEN_MILLION_SUPPLY_EXECUTION_PLAN_2026-11-20.md)
+
+All signing, regulated payments, and operational funding are **not yet connected**; it is improper to call this a live autonomous money manager before a signing service, merchant/bank provider account, monitoring and an actual verified receipt exist.
