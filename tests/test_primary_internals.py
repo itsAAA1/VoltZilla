@@ -95,6 +95,26 @@ class PrimaryTokenInternalsTests(unittest.TestCase):
         self.assertGreaterEqual(len(audit.DEFAULT_RPCS), 2)
         self.assertEqual(len(set(audit.DEFAULT_RPCS)), len(audit.DEFAULT_RPCS))
 
+
+    def test_live_observe_falls_back_to_known_accounts_when_index_is_rate_limited(self):
+        def fake_rpc(url, method, params, attempts=3):
+            if method == "getAccountInfo":
+                return {"context": {"slot": 1}, "value": account(raw_mint())}
+            if method == "getTokenLargestAccounts":
+                raise RuntimeError("HTTP 429 Too Many Requests")
+            if method == "getMultipleAccounts":
+                owners = [(POOL, 1000000000000000), (CREATOR, 7005921840554),
+                          ("BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s", 0)]
+                return {"context": {"slot": 1},
+                        "value": [account(raw_token_account(o, amt)) for o, amt in owners]}
+            raise AssertionError("Unexpected RPC method " + method)
+
+        with patch.object(audit, "rpc_call", side_effect=fake_rpc):
+            observed = audit.observe("https://example.test")
+        self.assertEqual(observed["holder_discovery"]["coverage"], "known_snapshot_partial")
+        self.assertEqual(observed["holders"]["unaccounted_ui"], "0")
+        self.assertEqual(observed["holders"]["pool_share_percent"], "99.30428196")
+
     def test_immutable_permissions_still_do_not_prove_social_ownership(self):
         data = audit.describe_authorities({"mint_authority": None, "freeze_authority": None})
         self.assertTrue(data["mint_authority_revoked"])
