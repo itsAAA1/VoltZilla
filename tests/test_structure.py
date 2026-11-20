@@ -37,6 +37,8 @@ class SourceWebsiteIntegrity(unittest.TestCase):
     def test_main_and_mobile_navigation(self):
         self.assertEqual(self.doc.mains, 1)
         self.assertIn('id="main-content"', self.html)
+        self.assertIn("GDYcemcZozG9ijhEZioRLRgNMtoxh1BBuV7nvdf1pump", self.html)
+        self.assertIn("Token-2022", self.html)
         self.assertIn('href="#main-content"', self.html)
         self.assertIn('<details class="mobile-nav">', self.html)
         self.assertIn('.mobile-nav{display:block}', self.html)
@@ -90,8 +92,8 @@ class SourceWebsiteIntegrity(unittest.TestCase):
         self.assertIn("Not verified", status)
 
     def test_standard_token_program_explanation(self):
-        self.assertIn("بلا رسوم نقل مدمجة", self.html)
-        self.assertIn("لا توجد سلطة لتجميد حسابات الحاملين", self.html)
+        self.assertIn("بدون امتداد رسوم نقل", self.html)
+        self.assertIn("لا توجد سلطة سك أو تجميد", self.html)
         self.assertNotIn("الضريبة (قيد التحقق)", self.html)
         status = (ROOT / "STATUS.md").read_text(encoding="utf-8")
         self.assertIn("27 October 2024", status)

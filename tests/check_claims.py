@@ -22,13 +22,19 @@ class Links(HTMLParser):
 p = Links(); p.feed(html)
 x_links = {h for h in p.hrefs if re.search(r"(^|//)(www\.)?(x|twitter)\.com/", h)}
 check(x_links == {OFFICIAL_X}, f"only the official X link is allowed, found {x_links}")
-for bad in ("t.me/", "discord.gg", "discord.com/invite", "pump.fun/", "raydium.io/swap"):
+for bad in ("t.me/", "discord.gg", "discord.com/invite", "raydium.io/swap"):
     check(not any(bad in h for h in p.hrefs), f"unverified link present: {bad}")
 check("https://dexscreener.com/solana" not in html, "generic DexScreener search must not be presented as a listing")
 for phrase in ("TO THE MOON", "تداول الآن", "مبروك!", "اشتري Solana", "افتح Raydium", "نسخ 📋", "copyContract"):
     check(phrase not in html, f"unsupported phrase in website/index.html: {phrase}")
 check(not re.search(r'stat-number">\s*(1B|0%|∞)\s*<', html), "unverified supply/tax/growth stat shown as fact")
 check("لا تشترِ الآن" in html, "no-buy verification notice missing")
+primary = "GDYcemcZozG9ijhEZioRLRgNMtoxh1BBuV7nvdf1pump"
+check(primary in html, "actual creator-linked GDY contract missing from source page")
+check("Token-2022" in html and "Mayhem" in html and "Cashback" in html, "actual deployed token program modes missing")
+check("1,007,005,921.840554" in html, "dated true issued supply absent")
+check("https://pump.fun/coin/"+primary in html, "authentic creator-linked Pump.fun token page not referenced")
+check(not any("pump.fun/" in h and h != "https://pump.fun/coin/"+primary for h in p.hrefs), "unverified pump fun link present")
 check('id="contract"' in html, "contract verification anchor missing")
 check('class="roadmap-dot dot-done"' not in html, "phase 1 marked complete without verification")
 check('class="roadmap-dot dot-active"' not in html, "phase 2 marked active without verification")
