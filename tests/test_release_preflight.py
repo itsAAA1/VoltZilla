@@ -26,7 +26,7 @@ class ReleasePreflightTests(unittest.TestCase):
 
     def test_different_mints_cannot_be_merged(self):
         mints = [c["mint"] for c in self.data["candidates"]]
-        self.assertEqual(len(set(mints)), 3)
+        self.assertEqual(len(set(mints)), 4)
         self.assertEqual({c["decimals"] for c in self.data["candidates"]}, {6, 9})
 
     def test_creator_linked_pumpfun_mint_kept_separate(self):
@@ -35,6 +35,15 @@ class ReleasePreflightTests(unittest.TestCase):
         self.assertEqual(primary["creator_wallet"], "GGSqpEPw3WDvfqJRj6frvrTz1C2wcUz28Sgfdg2NNJiD")
         self.assertEqual(primary["token_program"], "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb")
         self.assertFalse(primary["pumpfun_curve_complete"])
+        self.assertIsNone(self.data["official_mint"])
+
+    def test_separate_raydium_launchlab_mint_is_recorded(self):
+        candidate = next(c for c in self.data["candidates"] if c["id"] == "raydium_launchlab_creator_linked")
+        self.assertEqual(candidate["mint"], "3cPWF3eKjcq4Y8d2oVXDRaN8ipKBHuyK1uYWY4GT7ray")
+        self.assertEqual(candidate["deployer"], "28fU8SDMKLXe8hqmdy9dxYNHeddm7xQRzkxK16JLUpi4")
+        self.assertEqual(candidate["token_program"], "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA")
+        self.assertEqual(candidate["observed_supply"], "1000000000")
+        self.assertFalse(candidate["pool_graduated"])
         self.assertIsNone(self.data["official_mint"])
 
     def test_unknown_preferred_mint_is_rejected(self):
