@@ -81,6 +81,20 @@ class PrimaryTokenInternalsTests(unittest.TestCase):
             audit.reconcile_holders(Decimal(100), [
                 {"owner": POOL, "raw": "100000001"}], 6)
 
+
+    def test_fallback_keeps_observation_scoped_to_known_accounts(self):
+        selected, scope = audit.select_token_accounts(None)
+        self.assertEqual(scope, "known_snapshot_partial")
+        self.assertIn("HRa4LY8PLdhKG9YUvxafqjFzaqD7bXAiWU9FodrSpA9T", selected)
+        self.assertIn("EPKbdTsaYqqBGcjHHcEWM7EyHr8Buzqw3rGPB1wsCCf1", selected)
+        selected, scope = audit.select_token_accounts([{"address": "abc"}])
+        self.assertEqual(scope, "rpc_top20")
+        self.assertEqual(selected, ["abc"])
+
+    def test_default_rpc_candidates_have_distinct_verified_public_hostnames(self):
+        self.assertGreaterEqual(len(audit.DEFAULT_RPCS), 2)
+        self.assertEqual(len(set(audit.DEFAULT_RPCS)), len(audit.DEFAULT_RPCS))
+
     def test_immutable_permissions_still_do_not_prove_social_ownership(self):
         data = audit.describe_authorities({"mint_authority": None, "freeze_authority": None})
         self.assertTrue(data["mint_authority_revoked"])
