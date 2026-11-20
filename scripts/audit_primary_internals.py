@@ -89,9 +89,89 @@ def parse_mint_extensions(raw):
             "type": tag,
             "name": EXTENSIONS.get(tag, f"Unknown({tag})"),
             "byte_length": length,
+            "data_offset": pos,
         })
         pos += length
     return entries
+
+
+
+
+def parse_embedded_metadata(raw, extension_entries, expected_mint):
+    """Decode Token-2022 MetadataPointer and TokenMetadata authorities and strings.
+
+    This checks *both* potential update-authority fields; mint/freeze authority
+    revocation alone does not show a metadata pointer is immutable.
+    """
+    entries = {e["name"]: e for e in extension_entries}
+    if "MetadataPointer" not in entries or "TokenMetadata" not in entries:
+        raise ValueError("primary mint has missing embedded Token-2022 metadata extensions")
+
+    def chunk(name):
+        entry = entries[name]
+        start = entry["data_offset"]
+        end = start + entry["byte_length"]
+        if start < 166 or end > len(raw):
+            raise ValueError("Token-2022 metadata extension offsets invalid")
+        return raw[start:end]
+
+    def optional_key(key):
+        if len(key) != 32:
+            raise ValueError("invalid optional public key size")
+        return None if not any(key) else b58encode(key)
+
+    pointer = chunk("MetadataPointer")
+    if len(pointer) != 64:
+        raise ValueError("Token-2022 metadata pointer extension must be 64 bytes")
+    pointer_authority = optional_key(pointer[:32])
+    metadata_target = optional_key(pointer[32:64])
+
+    meta = chunk("TokenMetadata")
+    if len(meta) < 64:
+        raise ValueError("Token-2022 embedded metadata extension too short")
+    update_authority = optional_key(meta[:32])
+    embedded_mint = b58encode(meta[32:64])
+    if embedded_mint != expected_mint:
+        raise ValueError("embedded token metadata points to an unexpected mint")
+
+    def read_string(position):
+        if len(meta) - position < 4:
+            raise ValueError("truncated Borsh TokenMetadata string length")
+        length = struct.unpack_from("<I", meta, position)[0]
+        position += 4
+        if length > len(meta) - position:
+            raise ValueError("truncated Borsh TokenMetadata string data")
+        try:
+            result = meta[position:position + length].decode("utf-8")
+        except UnicodeDecodeError as exc:
+            raise ValueError("invalid UTF-8 in on-chain TokenMetadata") from exc
+        return result, position + length
+
+    name, pos = read_string(64)
+    symbol, pos = read_string(pos)
+    uri, pos = read_string(pos)
+    if len(meta) - pos < 4:
+        raise ValueError("truncated TokenMetadata key/value count")
+    count = struct.unpack_from("<I", meta, pos)[0]
+    pos += 4
+    if count > 100:
+        raise ValueError("unreasonable TokenMetadata key/value count")
+    attributes = {}
+    for _ in range(count):
+        key, pos = read_string(pos)
+        value, pos = read_string(pos)
+        attributes[key] = value
+    if pos != len(meta):
+        raise ValueError("trailing unexpected on-chain TokenMetadata bytes")
+    return {
+        "metadata_pointer_update_authority": pointer_authority,
+        "metadata_pointer_target": metadata_target,
+        "token_metadata_update_authority": update_authority,
+        "name": name,
+        "symbol": symbol,
+        "uri": uri,
+        "attributes": attributes,
+    }
 
 
 def risk_extension_names(extensions):
@@ -220,6 +300,9 @@ def observe(rpc_url):
     raw_mint = decode_rpc_bytes(mint_account)
     mint = parse_mint(raw_mint)
     extension_list = parse_mint_extensions(raw_mint)
+    embedded_metadata = parse_embedded_metadata(raw_mint, extension_list, MINT)
+    if embedded_metadata["name"] != "VoltZilla" or embedded_metadata["symbol"] != "VZLA":
+        raise ValueError("on-chain metadata name or symbol changed")
     if mint["decimals"] != 6:
         raise ValueError("unexpected primary mint decimal precision")
     if mint["mint_authority"] is not None or mint["freeze_authority"] is not None:
@@ -257,6 +340,7 @@ def observe(rpc_url):
     flags = {
         "unexpected_extensions": risk_extension_names(extension_list),
         "extension_set_changed": {e["name"] for e in extension_list} != EXPECTED_EXTENSIONS,
+        "metadata_pointer_target_changed": embedded_metadata["metadata_pointer_target"] != MINT,
         "supply_changed_since_baseline": mint["supply_raw"] != EXPECTED_SUPPLY_RAW,
         "top_account_balance_unaccounted": alloc["unaccounted_ui"] != "0",
     }
@@ -274,6 +358,8 @@ def observe(rpc_url):
         "mint_state": mint,
         "authorities": describe_authorities(mint),
         "extensions": extension_list,
+        "embedded_token_metadata": embedded_metadata,
+        "embedded_metadata_note": "Metadata pointer update authority and token metadata update authority are separate Token-2022 controls. Neither proves creator-wallet custody.",
         "holders": alloc,
         "holder_discovery": {"coverage": account_scope,
                              "largest_account_rpc_error": largest_error,
