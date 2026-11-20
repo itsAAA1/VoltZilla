@@ -243,7 +243,8 @@ def observe(rpc_url):
     if not isinstance(values, list) or len(values) != len(addrs):
         raise ValueError("getMultipleAccounts incomplete result")
     parsed = []
-    for label, reported, acct in zip(addrs, summary, values):
+    reported_rows = summary if summary is not None else [None] * len(addrs)
+    for label, reported, acct in zip(addrs, reported_rows, values):
         if not acct or acct.get("owner") != PROGRAM:
             raise ValueError(f"missing or invalid token account {label}")
         details = parse_token_account(decode_rpc_bytes(acct), MINT)
