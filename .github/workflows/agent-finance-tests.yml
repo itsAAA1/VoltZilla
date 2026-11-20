@@ -1,0 +1,26 @@
+name: Agent Finance Tests
+on:
+  push:
+    paths:
+      - "agent-finance/**"
+      - ".github/workflows/agent-finance-tests.yml"
+  pull_request:
+    paths:
+      - "agent-finance/**"
+      - ".github/workflows/agent-finance-tests.yml"
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Validate policy engine and RPC parsing without financial transactions
+        run: |
+          cd agent-finance
+          python -m unittest discover -s tests -v
+          python -m py_compile treasury.py solana_snapshot.py
