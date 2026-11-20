@@ -93,7 +93,7 @@ class SourceWebsiteIntegrity(unittest.TestCase):
 
     def test_standard_token_program_explanation(self):
         self.assertIn("بدون امتداد رسوم نقل", self.html)
-        self.assertIn("لا توجد سلطة لتجميد حسابات الحاملين", self.html)
+        self.assertIn("لا توجد سلطة سك أو تجميد", self.html)
         self.assertNotIn("الضريبة (قيد التحقق)", self.html)
         status = (ROOT / "STATUS.md").read_text(encoding="utf-8")
         self.assertIn("27 October 2024", status)
