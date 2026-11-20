@@ -33,6 +33,7 @@ jobs:
           print("mint_authority", data["mint_state"]["mint_authority"])
           print("freeze_authority", data["mint_state"]["freeze_authority"])
           print("extensions", [(x["name"], x["byte_length"]) for x in data["extensions"]])
+          print("embedded_metadata", data["embedded_token_metadata"])
           print("holder_coverage", data["holder_discovery"]["coverage"])
           print("curve_percent", data["holders"]["pool_share_percent"])
           print("creator_percent", data["holders"]["creator_share_percent"])
