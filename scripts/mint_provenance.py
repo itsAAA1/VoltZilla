@@ -2,8 +2,10 @@
 """Read-only provenance check for the four documented VZLA mints.
 
 For each mint it walks getSignaturesForAddress back to the oldest signature,
-then reads that first transaction to record who paid for it (the fee payer,
-i.e. the deploying wallet) and when it happened. It also records the newest
+then reads that first transaction and confirms it really creates the mint: a
+system createAccount for the mint account and a token-program initializeMint
+for it. The creator is the wallet that funded that createAccount; the fee
+payer is reported beside it. It also records the newest
 activity, so a change in a token's on-chain life shows up in the report.
 
 It never signs anything, never sends a transaction and never uses a private
@@ -93,10 +95,50 @@ def walk_signatures(call, mint):
     return newest, oldest, count, False
 
 
+TOKEN_PROGRAMS = {"spl-token", "spl-token-2022"}
+INIT_MINT = {"initializeMint", "initializeMint2"}
+CREATE_ACCOUNT = {"createAccount", "createAccountWithSeed"}
+
+
 def fee_payer(tx):
     keys = tx["transaction"]["message"]["accountKeys"]
     first = keys[0]
     return first["pubkey"] if isinstance(first, dict) else first
+
+
+def all_instructions(tx):
+    """Top-level plus inner (CPI) instructions of a jsonParsed transaction."""
+    out = list(tx["transaction"]["message"].get("instructions", []))
+    for group in (tx.get("meta") or {}).get("innerInstructions") or []:
+        out.extend(group.get("instructions", []))
+    return out
+
+
+def creation_evidence(tx, mint):
+    """Find the instructions that actually create and initialise this mint.
+
+    Returns the funder of the system createAccount for the mint account and
+    the token program's initializeMint for it. A fee payer alone is only a
+    hint; these two instructions are what make the transaction the creation.
+    """
+    ev = {"initialize_mint_found": False, "create_account_found": False,
+          "token_program": None, "mint_account_funder": None,
+          "initial_mint_authority": None}
+    for ins in all_instructions(tx):
+        parsed = ins.get("parsed")
+        if not isinstance(parsed, dict):
+            continue
+        info = parsed.get("info") or {}
+        program = ins.get("program")
+        kind = parsed.get("type")
+        if program in TOKEN_PROGRAMS and kind in INIT_MINT and info.get("mint") == mint:
+            ev["initialize_mint_found"] = True
+            ev["token_program"] = program
+            ev["initial_mint_authority"] = info.get("mintAuthority")
+        if program == "system" and kind in CREATE_ACCOUNT and info.get("newAccount") == mint:
+            ev["create_account_found"] = True
+            ev["mint_account_funder"] = info.get("source")
+    return ev
 
 
 def inspect(call, label, mint):
@@ -118,13 +160,24 @@ def inspect(call, label, mint):
         return out
     tx = call("getTransaction", [oldest["signature"], {"encoding": "jsonParsed",
                                                          "maxSupportedTransactionVersion": 0}])
-    if tx:
-        payer = fee_payer(tx)
-        out["creator_fee_payer"] = payer
-        out["creator_linked_to_owner_wallets"] = payer in OWNER_LINKED_WALLETS
-        expected = EXPECTED_CREATOR.get(label)
-        out["expected_creator"] = expected
-        out["creator_matches_expected"] = None if expected is None else payer == expected
+    if not tx:
+        out["error"] = "first transaction not returned"
+        return out
+    payer = fee_payer(tx)
+    ev = creation_evidence(tx, mint)
+    out["creator_fee_payer"] = payer
+    out.update(ev)
+    out["creation_instruction_verified"] = ev["initialize_mint_found"] and ev["create_account_found"]
+    # Creator = whoever funded the createAccount of the mint account; the fee
+    # payer is reported separately and must agree for a clean result.
+    creator = ev["mint_account_funder"] or payer
+    out["creator"] = creator
+    out["funder_equals_fee_payer"] = ev["mint_account_funder"] == payer if ev["mint_account_funder"] else None
+    out["creator_linked_to_owner_wallets"] = creator in OWNER_LINKED_WALLETS
+    expected = EXPECTED_CREATOR.get(label)
+    out["expected_creator"] = expected
+    out["creator_matches_expected"] = None if expected is None else (
+        out["creation_instruction_verified"] and creator == expected)
     return out
 
 
@@ -148,7 +201,9 @@ def main():
         except Exception as exc:  # report and keep going
             item = {"label": label, "mint": mint, "error": str(exc)}
         report["mints"].append(item)
-        if item.get("creator_matches_expected") is False:
+        if item.get("creator_matches_expected") is False or item.get("error"):
+            failed = True
+        if item.get("history_complete") and item.get("creation_instruction_verified") is False:
             failed = True
         time.sleep(1)
     print(json.dumps(report, indent=2))
