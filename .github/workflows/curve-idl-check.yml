@@ -1,0 +1,13 @@
+name: GDY curve IDL decode (read-only diagnostic)
+on:
+  push:
+    branches: [claude/curve-idl-check]
+permissions:
+  contents: read
+jobs:
+  decode:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/curve_idl_check.py
