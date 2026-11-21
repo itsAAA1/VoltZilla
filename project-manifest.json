@@ -115,7 +115,7 @@
   },
   "observations_note": "Dated read-only observations, not a live price, signed owner proof, exchange listing or investment recommendation.",
   "preferred_mint_candidate": "GDYcemcZozG9ijhEZioRLRgNMtoxh1BBuV7nvdf1pump",
-  "preferred_mint_basis": "Pump.fun creator public profile and creation transaction identify project-owner supplied public wallet GGSqpEPw3WDvfqJRj6frvrTz1C2wcUz28Sgfdg2NNJiD as creator; signature binding that address to the human owner is still missing.",
+  "preferred_mint_basis": "Pump.fun creator public profile and creation transaction identify project-owner supplied public wallet GGSqpEPw3WDvfqJRj6frvrTz1C2wcUz28Sgfdg2NNJiD as creator; the owner exported that wallet's key from the Pump.fun app and a wallet-control message was signed and verified on 2026-11-21 16:37:59 UTC (proofs/2026-11-21_GGSqp_wallet-control.json).",
   "wallet_control_proofs": [
     {
       "wallet": "28fU8SDMKLXe8hqmdy9dxYNHeddm7xQRzkxK16JLUpi4",
