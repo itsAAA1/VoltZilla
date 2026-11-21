@@ -42,3 +42,17 @@ if uri:
         print("URI_JSON", urllib.request.urlopen(req, timeout=30).read()[:3000].decode(errors="replace"))
     except Exception as e:
         print("URI_FETCH_ERROR", repr(e))
+
+CURVE = "6PpZaXsSnXCwm37W1PkMtmG1kCLjYNXk95eLoHMsFXBk"
+sigs = call("getSignaturesForAddress", [CURVE, {"limit": 1000}])
+from datetime import datetime, timezone
+print("curve_tx_count", len(sigs))
+for s in sigs[:5] + sigs[-3:]:
+    print("SIG", s["signature"][:16], datetime.fromtimestamp(s["blockTime"], timezone.utc).isoformat() if s.get("blockTime") else None, "err" if s.get("err") else "ok")
+cid = uri.rsplit("/", 1)[-1] if uri else None
+for gw in ("https://pump.mypinata.cloud/ipfs/", "https://gateway.pinata.cloud/ipfs/", "https://dweb.link/ipfs/"):
+    try:
+        req = urllib.request.Request(gw + cid, headers={"User-Agent": "Mozilla/5.0"})
+        print("URI_JSON", gw, urllib.request.urlopen(req, timeout=30).read()[:3000].decode(errors="replace")); break
+    except Exception as e:
+        print("URI_FETCH_ERROR", gw, repr(e))
