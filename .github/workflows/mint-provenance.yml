@@ -1,0 +1,35 @@
+name: VoltZilla mint provenance (read-only)
+
+on:
+  push:
+    paths:
+      - scripts/mint_provenance.py
+      - tests/test_mint_provenance.py
+      - .github/workflows/mint-provenance.yml
+  workflow_dispatch:
+  schedule:
+    # Mondays 06:47 Saudi time. Public chain reads only; no wallet, no signing.
+    - cron: '47 3 * * 1'
+
+permissions:
+  contents: read
+
+jobs:
+  provenance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Offline unit tests
+        run: python3 -m unittest tests/test_mint_provenance.py -v
+      - name: Creator and creation date of the four VZLA mints
+        run: |
+          python3 scripts/mint_provenance.py --check | tee mint-provenance.json
+      - name: Attach report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: voltzilla-mint-provenance
+          path: mint-provenance.json
+          if-no-files-found: ignore
+          retention-days: 30
