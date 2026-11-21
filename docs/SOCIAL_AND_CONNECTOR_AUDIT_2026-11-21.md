@@ -11,21 +11,22 @@
 | GitHub | `gh api` + دفع فرع + GitHub Actions | **يعمل للقراءة والفروع.** الدفع المباشر إلى `main` رُفض من طبقة الصلاحيات، فالتعديلات على فروع مع طلبات دمج |
 | Shopify | `get-shop-info` و`graphql_query` | **يعمل.** المتجر Basic، الريال، 51 منتج (23 نشط)، 12 مجموعة |
 | Semrush | `domain_overview` و`organic_research` و`site_audit` | **متصل بدون وحدات API.** كل التقارير `available:false` بسبب نفاد الوحدات |
-| QuickNode (Solana) | `list-endpoints` | **فشل:** HTTP 403، مفتاح API غير صحيح |
+| QuickNode (Solana) | `list-endpoints` و`get-billing` | **فشل مرتين:** HTTP 403، المفتاح المحفوظ في الموصل غير صحيح، مع أن الموصل يظهر «Connected» |
 | Ahrefs | `public-domain-rating-free` | يعمل، لكنه يرجّع تقييم النطاق الأب (github.io = 94، myshopify.com = 95)، فما يفيد |
-| TinyFish / Apify | بحث الأدوات | **لا توجد أدوات MCP محمّلة.** الإضافات مثبتة لكن بدون موصل متصل |
-| Solana RPC | `scripts/mint_provenance.py` على GitHub Actions | **يعمل** عبر `api.mainnet-beta.solana.com` (التشغيل 44913734975) |
+| TinyFish | `get_wallet` و`fetch_content` و`search` | **يعمل** بعد ربطه (رصيد 5.58 دولار) |
+| Apify | بحث الأدوات | ما له موصل متصل |
+| Solana RPC | `scripts/mint_provenance.py` على GitHub Actions | **يعمل** عبر `api.mainnet-beta.solana.com` (التشغيل 44916661242) |
 
 ## 2) فحص المنشئ وتاريخ الإنشاء (على السلسلة)
 
-المصدر: سير العمل `mint-provenance.yml`، تشغيل 44913734975 بتاريخ 2026-11-21T14:24Z.
+المصدر: سير العمل `mint-provenance.yml`، تشغيل 44916661242. في كل عقد، أول معاملة فيها تعليمة `createAccount` لحساب العقد وتعليمة `initializeMint` له، فهي معاملة الإنشاء فعلًا. المنشئ = المحفظة اللي موّلت `createAccount`، وتطابق دافع الرسوم في الأربعة.
 
-| العقد | أول معاملة (UTC) | المنشئ (دافع الرسوم) | مرتبط بمحافظك؟ | آخر نشاط |
-|---|---|---|---|---|
-| GDY…pump | 2026-04-04 13:11:40 | GGSqp…NJiD | نعم | 2026-04-05 |
-| 3cPWF3…7ray | 2026-05-15 04:56:55 | 28fU8…Upi4 | نعم | 2026-05-15 |
-| DHx…eyN9 | 2025-06-23 10:05:32 | 28fU8…Upi4 | نعم | 2026-05-15 |
-| JBa…pump | 2024-10-27 17:45:16 | `HnGQwXtHvfvSY1Zyf8xWFEE46D7Q6SzqNJJZGhLuLtwz` | **لا** | 2025-05-13 |
+| العقد | معاملة الإنشاء (UTC) | المنشئ | برنامج التوكن | مرتبط بمحافظك؟ | آخر نشاط |
+|---|---|---|---|---|---|
+| GDY…pump | 2026-04-04 13:11:40 | GGSqp…NJiD | Token-2022 | نعم | 2026-04-05 |
+| 3cPWF3…7ray | 2026-05-15 04:56:55 | 28fU8…Upi4 | SPL | نعم | 2026-05-15 |
+| DHx…eyN9 | 2025-06-23 10:05:32 | 28fU8…Upi4 | SPL | نعم | 2026-05-15 |
+| JBa…pump | 2024-10-27 17:45:16 | `HnGQwXtHvfvSY1Zyf8xWFEE46D7Q6SzqNJJZGhLuLtwz` | SPL | **لا** | 2025-05-13 |
 
 ## 3) أهم نتيجة: حساب X في بيانات GDY يروّج لعقد غيرك
 
