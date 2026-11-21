@@ -25,7 +25,7 @@
       "metadata_mutable": true,
       "observed_largest_token_account_percent": 100,
       "trading_pair_verified": false,
-      "note": "Previously owner-reported mint; wallet authority and project identity have not been cryptographically established."
+      "note": "Mint authority 28fU8 is now owner-signed (Solflare signMessage verified 2026-11-21, proofs/2026-11-21_28fU8_wallet-control.json). Official-mint selection is still a separate owner decision."
     },
     {
       "id": "historical_document",
@@ -67,7 +67,8 @@
       "pumpfun_cashback_mode": true,
       "last_observed_pumpfun_ui_liquidity_sol": "0.07",
       "last_observed_pumpfun_24h_volume_usd": "0",
-      "notes": "PRIMARY CREATOR-MATCHED CANDIDATE. Pump.fun public token page names creator wallet and displays token profile; verified via canonical Solana safety and creator wallet trade history. DEX Screener returned [] for external token pairs. Pump.fun UI pool liquidity differs from indexed virtual curve reserves; never conflate. Do not assert owner-signed identity, CMC/CG listing, graduation, investment performance or tradable depth without separate evidence."
+      "notes": "PRIMARY CREATOR-MATCHED CANDIDATE. Pump.fun public token page names creator wallet and displays token profile; verified via canonical Solana safety and creator wallet trade history. DEX Screener returned [] for external token pairs. Pump.fun UI pool liquidity differs from indexed virtual curve reserves; never conflate. Do not assert owner-signed identity, CMC/CG listing, graduation, investment performance or tradable depth without separate evidence.",
+      "geckoterminal_pool": "https://www.geckoterminal.com/solana/pools/6PpZaXsSnXCwm37W1PkMtmG1kCLjYNXk95eLoHMsFXBk"
     },
     {
       "id": "raydium_launchlab_creator_linked",
@@ -89,7 +90,8 @@
       "indexed_launchlab_pool": "J1nse1K58AcjDEtCdkL7nFByUNwjGuTkupxiKtwuxXAz",
       "pool_graduated": false,
       "trading_pair_verified": false,
-      "notes": "Distinct Raydium LaunchLab token. Helius canonical mint verified on 2026-11-20; Solana Tracker index reports deployer 28fU8 and a LaunchLab bonding-curve pool with 24h volume 0 at its stale/undated snapshot. Pool is not evidence of graduated Raydium CPMM market. Holder wallet control not owner-signed. Metadata creators can differ from actual deployer. Do not merge with GDY Pump token."
+      "notes": "Distinct Raydium LaunchLab token. Helius canonical mint verified on 2026-11-20; Solana Tracker index reports deployer 28fU8 and a LaunchLab bonding-curve pool with 24h volume 0 at its stale/undated snapshot. Pool is not evidence of graduated Raydium CPMM market. Deployer wallet 28fU8 control owner-signed on 2026-11-21 (proofs/2026-11-21_28fU8_wallet-control.json). Metadata creators can differ from actual deployer. Do not merge with GDY Pump token.",
+      "geckoterminal_pool": "https://www.geckoterminal.com/solana/pools/J1nse1K58AcjDEtCdkL7nFByUNwjGuTkupxiKtwuxXAz"
     }
   ],
   "release_gates": {
@@ -105,5 +107,24 @@
   },
   "observations_note": "Dated read-only observations, not a live price, signed owner proof, exchange listing or investment recommendation.",
   "preferred_mint_candidate": "GDYcemcZozG9ijhEZioRLRgNMtoxh1BBuV7nvdf1pump",
-  "preferred_mint_basis": "Pump.fun creator public profile and creation transaction identify project-owner supplied public wallet GGSqpEPw3WDvfqJRj6frvrTz1C2wcUz28Sgfdg2NNJiD as creator; signature binding that address to the human owner is still missing."
+  "preferred_mint_basis": "Pump.fun creator public profile and creation transaction identify project-owner supplied public wallet GGSqpEPw3WDvfqJRj6frvrTz1C2wcUz28Sgfdg2NNJiD as creator; signature binding that address to the human owner is still missing.",
+  "wallet_control_proofs": [
+    {
+      "wallet": "28fU8SDMKLXe8hqmdy9dxYNHeddm7xQRzkxK16JLUpi4",
+      "status": "signed_and_verified",
+      "signed_at_utc": "2026-11-21T10:22:59.988Z",
+      "wallet_app": "Solflare",
+      "record": "proofs/2026-11-21_28fU8_wallet-control.json",
+      "public_page": "https://itsaaa1.github.io/proof.html",
+      "covers_mints": [
+        "DHxStA9nRq6DdhBKT89s38fpxD9wE7MtyMn9HMuWeyN9",
+        "3cPWF3eKjcq4Y8d2oVXDRaN8ipKBHuyK1uYWY4GT7ray"
+      ]
+    },
+    {
+      "wallet": "GGSqpEPw3WDvfqJRj6frvrTz1C2wcUz28Sgfdg2NNJiD",
+      "status": "pending",
+      "note": "Creator of GDYcem...pump; held inside the Pump.fun account voltzilla_vzla. No signed proof yet."
+    }
+  ]
 }

@@ -12,6 +12,8 @@ on:
       - tests/**
       - scripts/release_preflight.py
       - project-manifest.json
+      - proofs/**
+      - scripts/verify_wallet_proof.py
       - docs/SECURITY_RECOVERY.md
       - .github/workflows/verify-claims.yml
 jobs:
@@ -30,6 +32,8 @@ jobs:
           print(result.stdout)
           assert result.returncode == 2, "Launch must stay blocked until independently verified"
           PY
+      - name: Verify signed wallet-control proofs (offline Ed25519)
+        run: python3 scripts/verify_wallet_proof.py
       - name: Verify unsupported claims do not return
         run: |
           python3 tests/check_claims.py
