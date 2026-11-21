@@ -91,6 +91,10 @@ def decode_curve(raw: bytes):
         out["creator"] = b58encode(raw[49:81])
     if len(raw) >= 82:
         out["is_mayhem_mode"] = bool(raw[81])
+    if len(raw) >= 83:
+        # Official IDL (pump-fun/pump-public-docs): on a cashback coin the 0.30% creator fee
+        # is credited to the buyer when the interface uses the cashback instructions.
+        out["is_cashback_coin"] = bool(raw[82])
     return out
 
 
