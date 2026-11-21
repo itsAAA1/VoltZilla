@@ -11,7 +11,8 @@ def creation_tx(sig, payer, mint, init=True, funder=None):
     inner = [{"program": "system", "parsed": {"type": "createAccount",
               "info": {"source": funder or payer, "newAccount": mint}}}]
     if init:
-        inner.append({"program": "spl-token-2022", "parsed": {"type": "initializeMint2",
+        inner.append({"program": "spl-token", "programId": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+                      "parsed": {"type": "initializeMint2",
                       "info": {"mint": mint, "mintAuthority": "auth"}}})
     return {"transaction": {"message": {"accountKeys": [{"pubkey": payer, "signer": True}],
                                          "instructions": [{"programId": "pump"}]}},
@@ -49,7 +50,7 @@ class ProvenanceTests(unittest.TestCase):
         self.assertTrue(out["creator_linked_to_owner_wallets"])
         self.assertTrue(out["first_seen_utc"].startswith("2026-04-04"))
         self.assertTrue(out["creation_instruction_verified"])
-        self.assertEqual(out["token_program"], "spl-token-2022")
+        self.assertEqual(out["token_program_id"], "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb")
         self.assertTrue(out["funder_equals_fee_payer"])
 
     def test_first_tx_without_initialize_mint_is_not_accepted(self):

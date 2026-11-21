@@ -122,7 +122,7 @@ def creation_evidence(tx, mint):
     hint; these two instructions are what make the transaction the creation.
     """
     ev = {"initialize_mint_found": False, "create_account_found": False,
-          "token_program": None, "mint_account_funder": None,
+          "token_program": None, "token_program_id": None, "mint_account_funder": None,
           "initial_mint_authority": None}
     for ins in all_instructions(tx):
         parsed = ins.get("parsed")
@@ -133,7 +133,9 @@ def creation_evidence(tx, mint):
         kind = parsed.get("type")
         if program in TOKEN_PROGRAMS and kind in INIT_MINT and info.get("mint") == mint:
             ev["initialize_mint_found"] = True
+            # RPC labels both Token and Token-2022 as "spl-token"; the id tells them apart.
             ev["token_program"] = program
+            ev["token_program_id"] = ins.get("programId")
             ev["initial_mint_authority"] = info.get("mintAuthority")
         if program == "system" and kind in CREATE_ACCOUNT and info.get("newAccount") == mint:
             ev["create_account_found"] = True
