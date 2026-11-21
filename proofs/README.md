@@ -5,7 +5,7 @@ Each JSON file is a message signed with Solana `signMessage` (Ed25519, UTF-8). I
 | Wallet | Role | Status | Record |
 |---|---|---|---|
 | `28fU8SDMKLXe8hqmdy9dxYNHeddm7xQRzkxK16JLUpi4` | Mint authority of `DHxSt…yN9`; deployer of `3cPWF3…7ray` | **Signed and verified** — 2026-11-21 10:22:59 UTC, Solflare | [2026-11-21_28fU8_wallet-control.json](2026-11-21_28fU8_wallet-control.json) |
-| `GGSqpEPw3WDvfqJRj6frvrTz1C2wcUz28Sgfdg2NNJiD` | Creator of `GDYcem…pump` (Pump.fun account `voltzilla_vzla`) | **Pending** | — |
+| `GGSqpEPw3WDvfqJRj6frvrTz1C2wcUz28Sgfdg2NNJiD` | Creator of `GDYcem…pump` (Pump.fun account `voltzilla_vzla`) | **Signed and verified** — 2026-11-21 16:37:59 UTC, Pump.fun app wallet key | [2026-11-21_GGSqp_wallet-control.json](2026-11-21_GGSqp_wallet-control.json) |
 
 ## Verify it yourself
 
