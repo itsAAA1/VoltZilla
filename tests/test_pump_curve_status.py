@@ -21,10 +21,11 @@ class PumpCurveTests(unittest.TestCase):
 
     def test_creator_and_mayhem_flag_decoded(self):
         creator = pc.b58decode("GGSqpEPw3WDvfqJRj6frvrTz1C2wcUz28Sgfdg2NNJiD")
-        data = b"\x17" * 8 + struct.pack("<5Q", 1, 1, 0, 0, 1) + b"\0" + creator + b"\x01"
+        data = b"\x17" * 8 + struct.pack("<5Q", 1, 1, 0, 0, 1) + b"\0" + creator + b"\x01\x01"
         c = pc.decode_curve(data)
         self.assertEqual(c["creator"], "GGSqpEPw3WDvfqJRj6frvrTz1C2wcUz28Sgfdg2NNJiD")
         self.assertTrue(c["is_mayhem_mode"])
+        self.assertTrue(c["is_cashback_coin"])
 
     def test_fee_gross_up(self):
         net = 10**9
