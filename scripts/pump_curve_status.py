@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """Read-only: state of the Pump.fun bonding curve for the GDY mint.
 
-Finds the curve account (owner of the largest GDY token account, owned by
-the Pump.fun program), decodes its reserves and computes how much SOL of
+Derives the curve account (PDA ["bonding-curve", mint] of the Pump.fun
+program, checked on-chain to be owned by that program), decodes its reserves and computes how much SOL of
 net buys is still needed for the curve to complete (graduate to PumpSwap).
 No wallet, no signing, no transactions.
 """
-import argparse, base64, json, struct, sys, time, urllib.error, urllib.request
+import argparse, base64, hashlib, json, struct, sys, time, urllib.error, urllib.request
 from datetime import datetime, timezone
 
 MINT = "GDYcemcZozG9ijhEZioRLRgNMtoxh1BBuV7nvdf1pump"
@@ -16,7 +16,53 @@ LAMPORTS = 10**9
 TOKEN_DECIMALS = 6
 
 
-def rpc(url, method, params, retries=4):
+B58 = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
+
+
+def b58decode(text):
+    n = 0
+    for ch in text:
+        n = n * 58 + B58.index(ch)
+    return n.to_bytes(32, "big")
+
+
+def b58encode(raw):
+    n, out = int.from_bytes(raw, "big"), ""
+    while n:
+        n, r = divmod(n, 58)
+        out = B58[r] + out
+    return "1" * (len(raw) - len(raw.lstrip(b"\0"))) + out
+
+
+_P = 2**255 - 19
+_D = (-121665 * pow(121666, _P - 2, _P)) % _P
+
+
+def on_ed25519_curve(point):
+    """True if 32 bytes decode to a point on edwards25519 (PDAs must be off-curve)."""
+    y = int.from_bytes(point, "little") & ((1 << 255) - 1)
+    sign = point[31] >> 7
+    if y >= _P:
+        return False
+    x2 = (y * y - 1) * pow(_D * y * y + 1, _P - 2, _P) % _P
+    if x2 == 0:
+        return sign == 0
+    x = pow(x2, (_P + 3) // 8, _P)
+    if x * x % _P != x2:
+        x = x * pow(2, (_P - 1) // 4, _P) % _P
+    return x * x % _P == x2
+
+
+def find_program_address(seeds, program_id):
+    program = b58decode(program_id)
+    for bump in range(255, -1, -1):
+        h = hashlib.sha256(b"".join(seeds) + bytes([bump]) + program + b"ProgramDerivedAddress").digest()
+        if not on_ed25519_curve(h):
+            return b58encode(h), bump
+    raise ValueError("no PDA found")
+
+
+def rpc(url, method, params, retries=6):
     body = json.dumps({"jsonrpc": "2.0", "id": 1, "method": method, "params": params}).encode()
     for attempt in range(retries):
         try:
@@ -29,7 +75,7 @@ def rpc(url, method, params, retries=4):
         except (urllib.error.URLError, ValueError, TimeoutError):
             if attempt == retries - 1:
                 raise
-            time.sleep(2 ** attempt)
+            time.sleep(min(2 ** (attempt + 1), 30))
 
 
 def decode_curve(raw: bytes):
@@ -74,9 +120,7 @@ def main():
     ap.add_argument("--rpc", default=DEFAULT_RPC)
     args = ap.parse_args()
     call = lambda m, p: rpc(args.rpc, m, p)
-    largest = call("getTokenLargestAccounts", [MINT, {"commitment": "finalized"}])["value"][0]["address"]
-    acct = call("getAccountInfo", [largest, {"encoding": "jsonParsed"}])["value"]
-    curve_address = acct["data"]["parsed"]["info"]["owner"]
+    curve_address, _ = find_program_address([b"bonding-curve", b58decode(MINT)], PUMP_PROGRAM)
     info = call("getAccountInfo", [curve_address, {"encoding": "base64"}])["value"]
     if info is None or info["owner"] != PUMP_PROGRAM:
         sys.exit(f"curve account {curve_address} is not owned by the Pump.fun program")

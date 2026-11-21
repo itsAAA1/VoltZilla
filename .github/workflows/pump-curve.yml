@@ -23,4 +23,6 @@ jobs:
       - name: Offline unit tests
         run: python3 -m unittest tests/test_pump_curve_status.py -v
       - name: GDY bonding curve reserves and SOL left to complete
-        run: python3 scripts/pump_curve_status.py | tee pump-curve.json
+        run: |
+          set -o pipefail
+          python3 scripts/pump_curve_status.py | tee pump-curve.json

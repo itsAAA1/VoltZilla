@@ -23,6 +23,13 @@ class PumpCurveTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             pc.decode_curve(b"\0" * 20)
 
+    def test_pda_is_off_curve_and_deterministic(self):
+        addr, bump = pc.find_program_address([b"bonding-curve", pc.b58decode(pc.MINT)], pc.PUMP_PROGRAM)
+        self.assertEqual(addr, pc.find_program_address([b"bonding-curve", pc.b58decode(pc.MINT)], pc.PUMP_PROGRAM)[0])
+        self.assertFalse(pc.on_ed25519_curve(pc.b58decode(addr)))
+        # A real wallet public key is on the curve.
+        self.assertTrue(pc.on_ed25519_curve(pc.b58decode("GGSqpEPw3WDvfqJRj6frvrTz1C2wcUz28Sgfdg2NNJiD")))
+
     def test_no_signing_code(self):
         src = (Path(pc.__file__)).read_text()
         for word in ("sign(", "Keypair", "private", "sendTransaction"):
