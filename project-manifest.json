@@ -40,7 +40,15 @@
       "metadata_mutable": false,
       "observed_largest_token_account_percent": null,
       "trading_pair_verified": false,
-      "note": "Separate historical Pump.fun mint; owner-to-project association and executable market not established."
+      "note": "Separate 2024 Pump.fun mint. Creator HnGQw... is not one of the owner-linked wallets (chain read 2026-11-21, workflow mint-provenance.yml). Two @VoltZillaSOL posts of 6 Apr 2026 advertise it as the $VZLA CA; that is wrong for the creator-linked GDY mint and needs correcting on X by the account holder.",
+      "creator_wallet": "HnGQwXtHvfvSY1Zyf8xWFEE46D7Q6SzqNJJZGhLuLtwz",
+      "first_tx": "4MXYWpa9nXBP96DMBDCJAKDAoGBSuvhdVt7aMmcxsx9ZAiBLwe3zWxj28NMBvoeNz2YvTSrRh6gm3ULRQTsmgNXk",
+      "created_at_utc": "2024-10-27T17:45:16Z",
+      "latest_activity_utc": "2025-05-13T11:46:30Z",
+      "advertised_as_vzla_by": [
+        "https://x.com/VoltZillaSOL/status/2041033725119430948",
+        "https://x.com/VoltZillaSOL/status/2041222026203988329"
+      ]
     },
     {
       "id": "pumpfun_creator_linked_primary",
