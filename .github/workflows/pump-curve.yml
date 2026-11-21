@@ -1,0 +1,28 @@
+name: VoltZilla Pump.fun curve status (read-only)
+
+on:
+  push:
+    paths:
+      - scripts/pump_curve_status.py
+      - tests/test_pump_curve_status.py
+      - .github/workflows/pump-curve.yml
+  workflow_dispatch:
+  schedule:
+    # Mondays 06:52 Saudi time. Public chain reads only; no wallet, no signing.
+    - cron: '52 3 * * 1'
+
+permissions:
+  contents: read
+
+jobs:
+  curve:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Offline unit tests
+        run: python3 -m unittest tests/test_pump_curve_status.py -v
+      - name: GDY bonding curve reserves and SOL left to complete
+        run: |
+          set -o pipefail
+          python3 scripts/pump_curve_status.py | tee pump-curve.json
