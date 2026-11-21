@@ -19,6 +19,18 @@ class PumpCurveTests(unittest.TestCase):
         c = pc.decode_curve(raw(279_900_000 * 10**6, 115 * 10**9, 0, 85 * 10**9, 10**15, 1))
         self.assertEqual(pc.sol_to_complete(c), 0)
 
+    def test_creator_and_mayhem_flag_decoded(self):
+        creator = pc.b58decode("GGSqpEPw3WDvfqJRj6frvrTz1C2wcUz28Sgfdg2NNJiD")
+        data = b"\x17" * 8 + struct.pack("<5Q", 1, 1, 0, 0, 1) + b"\0" + creator + b"\x01"
+        c = pc.decode_curve(data)
+        self.assertEqual(c["creator"], "GGSqpEPw3WDvfqJRj6frvrTz1C2wcUz28Sgfdg2NNJiD")
+        self.assertTrue(c["is_mayhem_mode"])
+
+    def test_fee_gross_up(self):
+        net = 10**9
+        self.assertAlmostEqual(pc.gross_spend(net) / 10**9, 1.0125)
+        self.assertAlmostEqual(pc.gross_spend(net, 45) / 10**9, 1.0125 / 0.9955)
+
     def test_short_account_rejected(self):
         with self.assertRaises(ValueError):
             pc.decode_curve(b"\0" * 20)

@@ -83,9 +83,15 @@ def decode_curve(raw: bytes):
     if len(raw) < 49:
         raise ValueError(f"curve account too short: {len(raw)} bytes")
     vt, vs, rt, rs, supply = struct.unpack_from("<5Q", raw, 8)
-    return {"virtual_token_reserves": vt, "virtual_sol_reserves": vs,
-            "real_token_reserves": rt, "real_sol_reserves": rs,
-            "token_total_supply": supply, "complete": bool(raw[48])}
+    out = {"virtual_token_reserves": vt, "virtual_sol_reserves": vs,
+           "real_token_reserves": rt, "real_sol_reserves": rs,
+           "token_total_supply": supply, "complete": bool(raw[48]),
+           "account_len": len(raw)}
+    if len(raw) >= 81:
+        out["creator"] = b58encode(raw[49:81])
+    if len(raw) >= 82:
+        out["is_mayhem_mode"] = bool(raw[81])
+    return out
 
 
 def sol_to_complete(curve):
@@ -96,6 +102,17 @@ def sol_to_complete(curve):
     if rt >= vt:
         raise ValueError("real token reserves must be below virtual token reserves")
     return -(-vs * rt // (vt - rt))  # ceil division
+
+
+CURVE_FEE_BPS = 125       # 0.95% protocol + 0.30% creator, charged on top of the SOL entering the curve
+APP_FEE_BPS = 45          # pump.fun web/mobile Platform Fee since 17 Oct 2026, deducted from the amount spent
+APP_FEE_REFERRAL_BPS = 40
+
+
+def gross_spend(net_lamports, app_fee_bps=0):
+    """SOL a buyer spends so that `net_lamports` enter the curve."""
+    with_curve_fee = net_lamports * (10_000 + CURVE_FEE_BPS) / 10_000
+    return with_curve_fee / (1 - app_fee_bps / 10_000)
 
 
 def summarize(curve, curve_address):
@@ -110,6 +127,9 @@ def summarize(curve, curve_address):
         "real_tokens_left_on_curve": curve["real_token_reserves"] / 10**TOKEN_DECIMALS,
         "net_sol_to_complete_before_fees": need / LAMPORTS,
         "total_real_sol_at_completion": (curve["real_sol_reserves"] + need) / LAMPORTS,
+        "spend_with_curve_fee": gross_spend(need) / LAMPORTS,
+        "spend_via_pumpfun_app": gross_spend(need, APP_FEE_BPS) / LAMPORTS,
+        "spend_via_pumpfun_app_with_referral": gross_spend(need, APP_FEE_REFERRAL_BPS) / LAMPORTS,
         "spot_price_sol_per_token": price_lamports_per_token * 10**TOKEN_DECIMALS / LAMPORTS,
         "raw": curve,
     }
