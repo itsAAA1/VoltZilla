@@ -1,6 +1,8 @@
 # VoltZilla VZLA — 7,000,000-token supply decision and execution prerequisites
 **Reviewed:** 2026-11-20 (Asia/Riyadh) | **Status:** PREPARED / NO ON-CHAIN CHANGE
 
+> **2026-11-21 correction:** the 7,000,000 figure traces to the creator wallet balance (7,005,921.84 GDY in `GGSqp…JiD`) that the legacy Genspark site mislabelled as total supply. No party requested a 7m supply. See [WALLET_LOCATIONS_AND_7M_ORIGIN_2026-11-21.md](WALLET_LOCATIONS_AND_7M_ORIGIN_2026-11-21.md) before acting on this plan.
+
 ## What is verified (separate real mints)
 1. Pump.fun candidate `GDYcemcZozG9ijhEZioRLRgNMtoxh1BBuV7nvdf1pump`: canonical supply **1,007,005,921.840554**, 6 decimals, `mintAuthority=null`. **Cannot reduce or increase this mint's issued supply to 7 million by changing a GitHub file or ordinary wallet setting**. This token also has an unfinished Pump.fun curve; the exact circulating balance changes with transactions and burns.
 2. Independent original SPL Token mint `DHxStA9nRq6DdhBKT89s38fpxD9wE7MtyMn9HMuWeyN9`: supply **1,000,000 VZLA**, 9 decimals, active mint authority `28fU8SDMKLXe8hqmdy9dxYNHeddm7xQRzkxK16JLUpi4`; freeze authority null; 100% of the issued supply reported in one token account owned by that authority wallet at the audited snapshot.
